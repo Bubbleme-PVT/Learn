@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopify Mastery Platform</title>
+  <meta name="description" content="Interactive Shopify development learning platform with roadmap, videos, progress tracking, quizzes, and modular architecture." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/main.css" />
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"><div id="scrollProgressFill" class="scroll-progress__fill"></div></div>
+
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+      <div class="sidebar__brand">
+        <div class="brand__logo">S</div>
+        <div>
+          <strong>Shopify Mastery Platform</strong>
+          <span>Beginner → Advanced + Interactive UI</span>
+        </div>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__label">Navigate</div>
+        <button class="nav-btn is-active" data-nav-page="overview">
+          <span>🏠 Overview</span><span class="nav-pill">Start</span>
+        </button>
+        <button class="nav-btn" data-nav-page="topics">
+          <span>📚 Topics</span><span class="nav-pill" id="topicCountPill">30</span>
+        </button>
+        <button class="nav-btn" data-nav-page="roadmap">
+          <span>🗺️ Roadmap</span><span class="nav-pill">12 ch</span>
+        </button>
+        <button class="nav-btn" data-nav-page="resources">
+          <span>🎯 Resources</span><span class="nav-pill">5 tabs</span>
+        </button>
+        <button class="nav-btn" data-nav-page="planner">
+          <span>🧠 Planner</span><span class="nav-pill">Goals</span>
+        </button>
+        <button class="nav-btn" data-nav-page="analytics">
+          <span>📈 Analytics</span><span class="nav-pill">Live</span>
+        </button>
+        <button class="nav-btn" data-nav-page="glossary">
+          <span>🗂️ Glossary</span><span class="nav-pill">Terms</span>
+        </button>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__label">Topic Filters</div>
+        <button class="filter-btn is-active" data-category="all">All Topics</button>
+        <button class="filter-btn" data-category="liquid">Liquid</button>
+        <button class="filter-btn" data-category="sections">Sections</button>
+        <button class="filter-btn" data-category="metafields">Metafields</button>
+        <button class="filter-btn" data-category="apps">Apps</button>
+        <button class="filter-btn" data-category="apis">APIs</button>
+        <button class="filter-btn" data-category="javascript">JavaScript</button>
+        <button class="filter-btn" data-category="tools">Tools</button>
+      </div>
+
+      <div class="sidebar__section">
+        <div class="sidebar__label">Developer Actions</div>
+        <button class="nav-btn nav-btn--utility" id="exportProgressBtn">⬇️ Export progress</button>
+        <label class="nav-btn nav-btn--utility nav-btn--file">
+          <span>⬆️ Import progress</span>
+          <input id="importProgressInput" type="file" accept="application/json" hidden />
+        </label>
+        <button class="nav-btn nav-btn--utility" id="downloadCertificateBtn">🏆 Download certificate</button>
+      </div>
+    </aside>
+
+    <div class="main-shell">
+      <header class="header">
+        <div class="header__left">
+          <button id="sidebarToggleBtn" class="icon-btn header__mobile-btn" aria-label="Toggle sidebar">☰</button>
+          <div class="search">
+            <span class="search__icon">⌕</span>
+            <input id="globalSearchInput" type="search" placeholder="Search topics, code, concepts, chapters..." aria-label="Search everything" />
+          </div>
+        </div>
+        <div class="header__right">
+          <div class="stat-pill">
+            <span>Progress</span>
+            <strong id="headerProgressText">0%</strong>
+          </div>
+          <div class="stat-pill">
+            <span>Streak</span>
+            <strong id="headerStreakText">0d</strong>
+          </div>
+          <button id="themeToggleBtn" class="icon-btn" aria-label="Toggle dark and light mode">🌙</button>
+        </div>
+      </header>
+
+      <main class="page-shell">
+        <section id="page-overview" class="page is-active" data-page="overview"></section>
+        <section id="page-topics" class="page" data-page="topics"></section>
+        <section id="page-roadmap" class="page" data-page="roadmap"></section>
+        <section id="page-resources" class="page" data-page="resources"></section>
+        <section id="page-planner" class="page" data-page="planner"></section>
+        <section id="page-analytics" class="page" data-page="analytics"></section>
+        <section id="page-glossary" class="page" data-page="glossary"></section>
+      </main>
+
+      <aside id="detailPanel" class="detail-panel" aria-live="polite" aria-label="Topic detail panel"></aside>
+    </div>
+  </div>
+
+  <div id="sidebarBackdrop" class="sidebar-backdrop" hidden></div>
+  <div id="toastStack" class="toast-stack" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

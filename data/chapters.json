@@ -1,0 +1,116 @@
+[
+  {
+    "id": 1,
+    "title": "Liquid Foundations",
+    "summary": "Core Liquid syntax, data flow, and modern snippet patterns.",
+    "topicIds": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Templates and Storefront Context",
+    "summary": "Template types and real Shopify page data.",
+    "topicIds": [
+      4
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Sections and Editor Flexibility",
+    "summary": "Build sections, blocks, and safe merchant-editable layouts.",
+    "topicIds": [
+      5,
+      6,
+      7
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Global Theme Configuration",
+    "summary": "Understand settings_schema.json, JSON templates, and partial updates.",
+    "topicIds": [
+      8,
+      9
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Custom Data Modeling",
+    "summary": "Metafields, validations, and metaobject-driven content systems.",
+    "topicIds": [
+      10,
+      11,
+      12
+    ]
+  },
+  {
+    "id": 6,
+    "title": "App Platform Basics",
+    "summary": "App types, App Bridge, and theme app extension patterns.",
+    "topicIds": [
+      13,
+      14,
+      15
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Commerce Extensibility",
+    "summary": "Functions and checkout extensibility for advanced workflows.",
+    "topicIds": [
+      16,
+      30
+    ]
+  },
+  {
+    "id": 8,
+    "title": "APIs and Webhooks",
+    "summary": "Admin API, Storefront API, webhook verification, and production flows.",
+    "topicIds": [
+      17,
+      18,
+      19,
+      20
+    ]
+  },
+  {
+    "id": 9,
+    "title": "JavaScript and Dynamic Storefront UX",
+    "summary": "Cart AJAX, section rendering, event systems, and no-reload cart UX.",
+    "topicIds": [
+      21,
+      22,
+      23,
+      24
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Core Developer Tooling",
+    "summary": "CLI and Dawn-based workflow fundamentals.",
+    "topicIds": [
+      25,
+      26
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Headless Shopify",
+    "summary": "Hydrogen and when to choose headless architecture.",
+    "topicIds": [
+      27
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Professional Delivery",
+    "summary": "Workflow quality, QA, Polaris, GraphiQL, VS Code, and partner operations.",
+    "topicIds": [
+      28,
+      29
+    ]
+  }
+]

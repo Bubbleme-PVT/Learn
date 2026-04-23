@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Product Page Upgrade",
+    "level": "Beginner",
+    "outcome": "Build a product template upgrade using metafields, dynamic sections, and a robust product form."
+  },
+  {
+    "title": "AJAX Cart Drawer",
+    "level": "Intermediate",
+    "outcome": "Implement add/change/remove flows, event-driven refreshes, and Section Rendering API updates."
+  },
+  {
+    "title": "Metaobject Content System",
+    "level": "Intermediate",
+    "outcome": "Create reusable FAQs, buying guides, or authors and surface them across a storefront."
+  },
+  {
+    "title": "Embedded Admin App",
+    "level": "Advanced",
+    "outcome": "Build a small embedded app with App Bridge, Polaris, Admin API reads, and a webhook."
+  },
+  {
+    "title": "Discount Function + Checkout UI",
+    "level": "Advanced",
+    "outcome": "Implement a Function and a checkout UI extension for a targeted commerce workflow."
+  },
+  {
+    "title": "Hydrogen Storefront MVP",
+    "level": "Advanced",
+    "outcome": "Build a headless storefront slice using Hydrogen, Storefront API, and Oxygen deployment."
+  }
+]
