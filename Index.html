@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Shopify Mastery Academy Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font: 'Inter', system-ui, sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+      --bg: #09111d;
+      --bg2: #0f1727;
+      --bg3: #131f35;
+      --bg4: #1a2841;
+      --surface: #101b2d;
+      --surface2: #142238;
+      --border: #1f2d46;
+      --border2: #314563;
+      --text: #e6edf7;
+      --muted: #97acc8;
+      --muted2: #68809e;
+      --accent: #4f8cff;
+      --accent2: #2d71ff;
+      --accent-soft: rgba(79,140,255,.12);
+      --accent-glow: rgba(79,140,255,.24);
+      --green: #22c55e;
+      --green-soft: rgba(34,197,94,.12);
+      --amber: #f59e0b;
+      --amber-soft: rgba(245,158,11,.12);
+      --red: #ef4444;
+      --red-soft: rgba(239,68,68,.12);
+      --violet: #a78bfa;
+      --violet-soft: rgba(167,139,250,.12);
+      --cyan: #22d3ee;
+      --cyan-soft: rgba(34,211,238,.12);
+      --pink: #ec4899;
+      --pink-soft: rgba(236,72,153,.12);
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --shadow-lg: 0 18px 60px rgba(0,0,0,.35);
+      --r: 12px;
+      --r2: 18px;
+      --header-h: 72px;
+      --sidebar-w: 280px;
+    }
+    [data-theme="light"] {
+      --bg: #f7f9fc;
+      --bg2: #ffffff;
+      --bg3: #f1f5fb;
+      --bg4: #e6edf7;
+      --surface: #ffffff;
+      --surface2: #f8fbff;
+      --border: #dce7f4;
+      --border2: #bfd1e6;
+      --text: #112036;
+      --muted: #4f6580;
+      --muted2: #7c91ac;
+      --accent-soft: rgba(79,140,255,.08);
+      --accent-glow: rgba(79,140,255,.18);
+      --shadow: 0 10px 30px rgba(21, 35, 56, .08);
+      --shadow-lg: 0 18px 60px rgba(21,35,56,.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      background: linear-gradient(180deg, var(--bg2), var(--bg));
+      color: var(--text);
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+    code, pre { font-family: var(--mono); }
+    .app {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      min-height: 100vh;
+    }
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      border-right: 1px solid var(--border);
+      background: rgba(10,16,30,.72);
+      backdrop-filter: blur(16px);
+      padding: 18px 16px;
+      overflow-y: auto;
+    }
+    [data-theme="light"] .sidebar { background: rgba(255,255,255,.82); }
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--bg2);
+    }
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--violet));
+      color: white;
+      font-weight: 800;
+      box-shadow: 0 10px 24px var(--accent-glow);
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .brand p {
+      margin: 2px 0 0;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .side-section {
+      margin-top: 18px;
+    }
+    .side-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--muted2);
+      padding: 0 10px 8px;
+      font-weight: 700;
+    }
+    .nav-btn, .filter-btn {
+      width: 100%;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--muted);
+      padding: 11px 12px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 4px;
+      transition: .18s ease;
+    }
+    .nav-btn:hover, .filter-btn:hover {
+      background: var(--accent-soft);
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .nav-btn.active, .filter-btn.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .nav-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .nav-meta {
+      min-width: 0;
+    }
+    .nav-title {
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-sub {
+      font-size: 11px;
+      color: var(--muted2);
+      margin-top: 2px;
+    }
+    .badge {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--muted2);
+      white-space: nowrap;
+    }
+    .main {
+      min-width: 0;
+    }
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 22px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(9,17,29,.76);
+      backdrop-filter: blur(16px);
+    }
+    [data-theme="light"] .header { background: rgba(247,249,252,.9); }
+    .mobile-menu {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--text);
+    }
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+    }
+    .search {
+      width: 100%;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid var(--border2);
+      background: var(--bg2);
+      color: var(--text);
+      padding: 0 16px 0 44px;
+      outline: none;
+      transition: .18s ease;
+    }
+    .search:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted2);
+      pointer-events: none;
+      font-size: 14px;
+    }
+    .search-panel {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 8px);
+      display: none;
+      max-height: 420px;
+      overflow: auto;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      border-radius: 18px;
+      box-shadow: var(--shadow-lg);
+    }
+    .search-panel.open { display: block; }
+    .search-group {
+      padding: 10px 10px 0;
+    }
+    .search-group h4 {
+      margin: 0 0 8px;
+      color: var(--muted2);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      padding: 4px 8px;
+    }
+    .search-item {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 12px;
+      border-radius: 12px;
+      text-align: left;
+    }
+    .search-item:hover {
+      background: var(--accent-soft);
+    }
+    .search-item small {
+      color: var(--muted);
+      display: block;
+      margin-top: 3px;
+    }
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .icon-btn, .ghost-btn, .primary-btn {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--text);
+      height: 42px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: .18s ease;
+    }
+    .icon-btn {
+      width: 42px;
+      padding: 0;
+    }
+    .primary-btn {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      box-shadow: 0 10px 24px var(--accent-glow);
+    }
+    .ghost-btn:hover, .icon-btn:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .primary-btn:hover {
+      background: var(--accent2);
+    }
+    .content {
+      padding: 22px;
+    }
+    .page {
+      display: none;
+      animation: fade .18s ease;
+    }
+    .page.active { display: block; }
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: none; }
+    }
+    .hero {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at top right, rgba(79,140,255,.18), transparent 36%),
+        radial-gradient(circle at bottom left, rgba(167,139,250,.14), transparent 32%),
+        linear-gradient(180deg, var(--bg2), var(--surface));
+      padding: 30px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 800;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(79,140,255,.3);
+      margin-bottom: 14px;
+    }
+    .hero h2 {
+      font-size: clamp(30px, 6vw, 52px);
+      line-height: 1.04;
+      letter-spacing: -.04em;
+      margin: 0 0 12px;
+      max-width: 860px;
+    }
+    .hero h2 span {
+      background: linear-gradient(135deg, var(--accent), var(--violet));
+      -webkit-background-clip: text;
+      color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .stat-grid, .feature-grid, .project-grid, .planner-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(12, 1fr);
+      margin-top: 18px;
+    }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--bg2);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      min-width: 0;
+    }
+    .stat {
+      grid-column: span 3;
+      padding: 18px;
+    }
+    .stat strong {
+      display: block;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      margin-bottom: 6px;
+    }
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 26px 0 14px;
+    }
+    .section-head h3 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -.03em;
+    }
+    .section-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 14px;
+    }
+    .feature-card {
+      min-height: 170px;
+    }
+    .feature-card h4, .topic-card h4, .roadmap-card h4, .resource-card h4, .project-card h4, .glossary-card h4 {
+      margin: 12px 0 8px;
+      font-size: 16px;
+      letter-spacing: -.02em;
+    }
+    .feature-card p, .topic-card p, .roadmap-card p, .resource-card p, .project-card p, .glossary-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 10px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .pill.foundation { background: var(--green-soft); color: var(--green); }
+    .pill.liquid { background: var(--accent-soft); color: var(--accent); }
+    .pill.theme { background: var(--violet-soft); color: var(--violet); }
+    .pill.data { background: var(--pink-soft); color: var(--pink); }
+    .pill.frontend { background: var(--amber-soft); color: var(--amber); }
+    .pill.api { background: var(--red-soft); color: var(--red); }
+    .pill.apps { background: rgba(20,184,166,.12); color: #14b8a6; }
+    .pill.advanced { background: rgba(34,211,238,.12); color: var(--cyan); }
+    .pill.pro { background: rgba(148,163,184,.16); color: var(--muted); }
+    .small-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      color: var(--muted2);
+      font-size: 12px;
+    }
+    .topic-grid, .resource-grid, .glossary-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+    }
+    .topic-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 260px;
+    }
+    .topic-card .actions {
+      margin-top: auto;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding-top: 12px;
+    }
+    .mini-btn {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      color: var(--text);
+      height: 38px;
+      padding: 0 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mini-btn.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .topic-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .roadmap-list {
+      display: grid;
+      gap: 14px;
+    }
+    .roadmap-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--bg2);
+      overflow: hidden;
+    }
+    .roadmap-head {
+      width: 100%;
+      text-align: left;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+    .roadmap-body {
+      display: none;
+      padding: 0 18px 18px;
+    }
+    .roadmap-card.open .roadmap-body {
+      display: block;
+    }
+    .chapter-topic-list {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .chip {
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 12px;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--bg4);
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--green));
+      border-radius: 999px;
+      transition: width .25s ease;
+    }
+    .resource-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .resource-card, .project-card, .glossary-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .tag-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      color: var(--muted);
+    }
+    .project-grid {
+      grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+    .project-list {
+      padding-left: 18px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .planner-grid {
+      grid-template-columns: 1.2fr .8fr;
+    }
+    .planner-box label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .range-wrap {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .range-wrap input[type="range"] {
+      width: 100%;
+    }
+    .study-plan {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+    .plan-item {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      background: var(--bg3);
+    }
+    .muted {
+      color: var(--muted);
+    }
+    .footer-note {
+      margin-top: 22px;
+      color: var(--muted2);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .drawer {
+      position: fixed;
+      inset: 0;
+      background: rgba(2,8,18,.62);
+      display: none;
+      z-index: 60;
+      padding: 30px;
+    }
+    .drawer.open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal {
+      width: min(1100px, 100%);
+      max-height: calc(100vh - 60px);
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: var(--bg2);
+      box-shadow: var(--shadow-lg);
+    }
+    .modal-head {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+      padding: 22px 22px 16px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15,23,39,.92);
+      backdrop-filter: blur(10px);
+    }
+    [data-theme="light"] .modal-head { background: rgba(255,255,255,.95); }
+    .modal-body {
+      padding: 20px 22px 24px;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1.25fr .75fr;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .tab-btn {
+      height: 38px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      color: var(--muted);
+    }
+    .tab-btn.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .pane {
+      display: none;
+    }
+    .pane.active {
+      display: block;
+    }
+    .concept-list {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      list-style: none;
+    }
+    .concept-list li {
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      border-radius: 14px;
+      padding: 12px 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .code-box {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      background: #08111c;
+    }
+    [data-theme="light"] .code-box { background: #0f172a; }
+    .code-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      color: #93a6c0;
+      font-size: 12px;
+    }
+    .code-box pre {
+      margin: 0;
+      padding: 16px;
+      overflow: auto;
+      color: #e6edf7;
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .quiz-box {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      background: var(--bg3);
+    }
+    .quiz-options {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .quiz-option {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: var(--bg2);
+      display: flex;
+      gap: 10px;
+      align-items: start;
+    }
+    .quiz-option input {
+      margin-top: 2px;
+    }
+    .quiz-result {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      display: none;
+      line-height: 1.7;
+    }
+    .quiz-result.good {
+      display: block;
+      background: var(--green-soft);
+      color: var(--green);
+      border: 1px solid rgba(34,197,94,.2);
+    }
+    .quiz-result.bad {
+      display: block;
+      background: var(--red-soft);
+      color: var(--red);
+      border: 1px solid rgba(239,68,68,.2);
+    }
+    .note-box textarea {
+      width: 100%;
+      min-height: 180px;
+      resize: vertical;
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      background: var(--bg3);
+      color: var(--text);
+      padding: 14px;
+      outline: none;
+    }
+    .side-stack {
+      display: grid;
+      gap: 14px;
+    }
+    .stack-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--bg3);
+      padding: 16px;
+    }
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+    .check-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      border-bottom: 1px dashed rgba(255,255,255,.06);
+      padding-bottom: 10px;
+    }
+    .empty {
+      border: 1px dashed var(--border2);
+      border-radius: 18px;
+      padding: 26px;
+      text-align: center;
+      color: var(--muted);
+      background: var(--bg2);
+    }
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(2,8,18,.52);
+      z-index: 30;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    @media (max-width: 1180px) {
+      .topic-grid, .resource-grid, .glossary-grid, .grid-4 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .stat { grid-column: span 6; }
+      .modal-body, .planner-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 920px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        transform: translateX(-100%);
+        transition: .22s ease;
+        z-index: 40;
+        width: min(320px, 86vw);
+      }
+      .sidebar.open { transform: translateX(0); }
+      .mobile-overlay.open { display: block; }
+      .mobile-menu { display: inline-flex; }
+      .header { padding: 0 14px; }
+      .content { padding: 16px; }
+      .project-grid, .grid-4, .topic-grid, .resource-grid, .glossary-grid { grid-template-columns: 1fr; }
+      .stat { grid-column: span 12; }
+      .header-actions .ghost-btn span.label { display: none; }
+      .hero { padding: 22px; }
+      .drawer { padding: 10px; }
+      .modal { max-height: calc(100vh - 20px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Sidebar navigation">
+      <div class="brand">
+        <div class="logo">S</div>
+        <div>
+          <h1>Shopify Mastery Academy Pro</h1>
+          <p>Improved full-code learning platform</p>
+        </div>
+      </div>
+
+      <div class="side-section">
+        <div class="side-label">Pages</div>
+        <button class="nav-btn active" data-page="overview">
+          <span class="nav-left">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-meta"><span class="nav-title">Overview</span><span class="nav-sub">Dashboard and progress</span></span>
+          </span>
+          <span class="badge">Start</span>
+        </button>
+        <button class="nav-btn" data-page="roadmap">
+          <span class="nav-left">
+            <span class="nav-icon">🗺️</span>
+            <span class="nav-meta"><span class="nav-title">Roadmap</span><span class="nav-sub">12 chapters</span></span>
+          </span>
+          <span class="badge" id="chapterCountBadge">12</span>
+        </button>
+        <button class="nav-btn" data-page="topics">
+          <span class="nav-left">
+            <span class="nav-icon">📚</span>
+            <span class="nav-meta"><span class="nav-title">Topics</span><span class="nav-sub">26 lessons + quizzes</span></span>
+          </span>
+          <span class="badge" id="topicCountBadge">26</span>
+        </button>
+        <button class="nav-btn" data-page="resources">
+          <span class="nav-left">
+            <span class="nav-icon">🎯</span>
+            <span class="nav-meta"><span class="nav-title">Resources</span><span class="nav-sub">Official docs + videos</span></span>
+          </span>
+          <span class="badge">5 tabs</span>
+        </button>
+        <button class="nav-btn" data-page="projects">
+          <span class="nav-left">
+            <span class="nav-icon">🧪</span>
+            <span class="nav-meta"><span class="nav-title">Projects</span><span class="nav-sub">Build-by-doing track</span></span>
+          </span>
+          <span class="badge">4</span>
+        </button>
+        <button class="nav-btn" data-page="glossary">
+          <span class="nav-left">
+            <span class="nav-icon">📘</span>
+            <span class="nav-meta"><span class="nav-title">Glossary</span><span class="nav-sub">Core terms</span></span>
+          </span>
+          <span class="badge">15</span>
+        </button>
+        <button class="nav-btn" data-page="planner">
+          <span class="nav-left">
+            <span class="nav-icon">🗓️</span>
+            <span class="nav-meta"><span class="nav-title">Study Planner</span><span class="nav-sub">Personal pace</span></span>
+          </span>
+          <span class="badge">Custom</span>
+        </button>
+      </div>
+
+      <div class="side-section">
+        <div class="side-label">Quick filters</div>
+        <button class="filter-btn active" data-category="all">
+          <span class="nav-left"><span class="nav-icon">✨</span><span class="nav-meta"><span class="nav-title">All Topics</span><span class="nav-sub">Everything</span></span></span>
+        </button>
+        <button class="filter-btn" data-category="liquid">
+          <span class="nav-left"><span class="nav-icon">📝</span><span class="nav-meta"><span class="nav-title">Liquid</span><span class="nav-sub">Templates and data</span></span></span>
+        </button>
+        <button class="filter-btn" data-category="theme">
+          <span class="nav-left"><span class="nav-icon">🧩</span><span class="nav-meta"><span class="nav-title">Theme</span><span class="nav-sub">Sections and templates</span></span></span>
+        </button>
+        <button class="filter-btn" data-category="data">
+          <span class="nav-left"><span class="nav-icon">🗃️</span><span class="nav-meta"><span class="nav-title">Data</span><span class="nav-sub">Metafields + metaobjects</span></span></span>
+        </button>
+        <button class="filter-btn" data-category="frontend">
+          <span class="nav-left"><span class="nav-icon">⚡</span><span class="nav-meta"><span class="nav-title">Frontend</span><span class="nav-sub">AJAX, UX, performance</span></span></span>
+        </button>
+        <button class="filter-btn" data-category="api">
+          <span class="nav-left"><span class="nav-icon">🔌</span><span class="nav-meta"><span class="nav-title">API</span><span class="nav-sub">GraphQL and webhooks</span></span></span>
+        </button>
+        <button class="filter-btn" data-category="apps">
+          <span class="nav-left"><span class="nav-icon">📦</span><span class="nav-meta"><span class="nav-title">Apps</span><span class="nav-sub">OAuth and embedded UX</span></span></span>
+        </button>
+        <button class="filter-btn" data-category="advanced">
+          <span class="nav-left"><span class="nav-icon">🚀</span><span class="nav-meta"><span class="nav-title">Advanced</span><span class="nav-sub">Functions, headless, markets</span></span></span>
+        </button>
+        <button class="filter-btn" data-category="pro">
+          <span class="nav-left"><span class="nav-icon">🛠️</span><span class="nav-meta"><span class="nav-title">Professional</span><span class="nav-sub">QA and handoff</span></span></span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="header">
+        <button class="mobile-menu" id="mobileMenuBtn" aria-label="Open menu">☰</button>
+        <div class="search-wrap">
+          <span class="search-icon">🔎</span>
+          <input class="search" id="globalSearch" type="search" placeholder="Search topics, resources, glossary terms..." aria-label="Search topics and resources">
+          <div class="search-panel" id="searchPanel" aria-live="polite"></div>
+        </div>
+        <div class="header-actions">
+          <button class="ghost-btn" id="exportBtn"><span>⬇️</span><span class="label">Export</span></button>
+          <label class="ghost-btn" for="importInput" style="cursor:pointer;"><span>⬆️</span><span class="label">Import</span></label>
+          <input id="importInput" class="sr-only" type="file" accept="application/json">
+          <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">🌙</button>
+        </div>
+      </header>
+
+      <div class="content">
+        <section class="page active" id="page-overview">
+          <div class="hero">
+            <div class="eyebrow">Upgraded full code • quizzes • notes • bookmarks • planner</div>
+            <h2>Master <span>Shopify development</span> with a real learning system, not just a pretty reference page.</h2>
+            <p>This upgraded version fixes the brittle completion logic, removes inline click handlers, adds semantic controls, includes working bookmarks, notes, quizzes, export/import progress, better search, direct topic links, more advanced Shopify learning material, and build-based projects.</p>
+            <div class="hero-actions">
+              <button class="primary-btn" data-page-jump="roadmap">Start roadmap</button>
+              <button class="ghost-btn" data-page-jump="topics">Browse topics</button>
+              <button class="ghost-btn" data-page-jump="projects">Open capstones</button>
+            </div>
+          </div>
+
+          <div class="stat-grid">
+            <div class="card stat"><strong id="statTopics">0</strong><span>Topics</span></div>
+            <div class="card stat"><strong id="statCompleted">0</strong><span>Completed</span></div>
+            <div class="card stat"><strong id="statBookmarks">0</strong><span>Bookmarked</span></div>
+            <div class="card stat"><strong id="statMinutes">0</strong><span>Estimated hours left</span></div>
+          </div>
+
+          <div class="section-head">
+            <div>
+              <h3>What this version improves</h3>
+              <p>Built directly from the flaws review and expanded into a more complete academy product.</p>
+            </div>
+          </div>
+          <div class="grid-4">
+            <div class="card feature-card">
+              <div class="pill pro">Code quality</div>
+              <h4>Exact-state logic</h4>
+              <p>Completion and bookmark state use exact topic ids in a structured store instead of brittle string matching on inline onclick attributes.</p>
+            </div>
+            <div class="card feature-card">
+              <div class="pill frontend">Accessibility</div>
+              <h4>Semantic controls</h4>
+              <p>Buttons, focus management, keyboard-friendly modal behavior, and cleaner event listeners make the UI more reliable.</p>
+            </div>
+            <div class="card feature-card">
+              <div class="pill foundation">Learning engine</div>
+              <h4>Quizzes + notes</h4>
+              <p>Each topic includes concepts, code, a quick quiz, persistent notes, and official-learning links so the page teaches instead of only presenting.</p>
+            </div>
+            <div class="card feature-card">
+              <div class="pill advanced">Depth</div>
+              <h4>More advanced material</h4>
+              <p>Added headless, Functions, checkout extensions, markets, B2B, app review, QA, and client handoff modules.</p>
+            </div>
+          </div>
+
+          <div class="section-head">
+            <div>
+              <h3>Continue learning</h3>
+              <p>Your next recommended topic updates automatically based on progress.</p>
+            </div>
+          </div>
+          <div class="card" id="continueCard"></div>
+
+          <div class="section-head">
+            <div>
+              <h3>Learning paths</h3>
+              <p>Choose a lane depending on your current skill level and outcome.</p>
+            </div>
+          </div>
+          <div class="grid-4">
+            <div class="card feature-card">
+              <div class="pill foundation">Beginner</div>
+              <h4>Storefront foundations</h4>
+              <p>Platform basics, Liquid, theme architecture, sections, and custom data modeling.</p>
+            </div>
+            <div class="card feature-card">
+              <div class="pill frontend">Intermediate</div>
+              <h4>Modern theme development</h4>
+              <p>AJAX cart, performance, accessibility, QA, and maintainable frontend patterns.</p>
+            </div>
+            <div class="card feature-card">
+              <div class="pill apps">Advanced apps</div>
+              <h4>App workflows</h4>
+              <p>Admin GraphQL, webhooks, OAuth, session tokens, App Bridge, billing, and review readiness.</p>
+            </div>
+            <div class="card feature-card">
+              <div class="pill advanced">Expert track</div>
+              <h4>Functions + headless</h4>
+              <p>Checkout extensibility, Functions, Hydrogen, Oxygen caching, Markets, B2B, and enterprise delivery.</p>
+            </div>
+          </div>
+
+          <p class="footer-note">Tip: use Export to save your progress as JSON, and Import to restore it later. Notes, quiz results, bookmarks, planner minutes, and completion state are all saved locally.</p>
+        </section>
+
+        <section class="page" id="page-roadmap">
+          <div class="section-head">
+            <div>
+              <h3>Complete roadmap</h3>
+              <p>12 chapters arranged from fundamentals to professional delivery.</p>
+            </div>
+            <div class="badge" id="roadmapProgressBadge">0% complete</div>
+          </div>
+          <div class="card">
+            <strong style="font-size:18px; display:block;">Overall completion</strong>
+            <div class="progress-bar"><div class="progress-fill" id="roadmapProgress"></div></div>
+            <div class="small-meta" id="roadmapMeta"></div>
+          </div>
+          <div class="roadmap-list" id="roadmapList"></div>
+        </section>
+
+        <section class="page" id="page-topics">
+          <div class="section-head">
+            <div>
+              <h3>Topic library</h3>
+              <p>Search, filter, bookmark, complete, quiz, and take notes on every lesson.</p>
+            </div>
+            <div class="badge" id="topicCountLabel"></div>
+          </div>
+          <div class="topic-filters" id="topicFilterBar">
+            <button class="mini-btn active" data-level="all">All levels</button>
+            <button class="mini-btn" data-level="Beginner">Beginner</button>
+            <button class="mini-btn" data-level="Intermediate">Intermediate</button>
+            <button class="mini-btn" data-level="Advanced">Advanced</button>
+            <button class="mini-btn" id="bookmarkedOnlyBtn">⭐ Bookmarked only</button>
+            <button class="mini-btn" id="incompleteOnlyBtn">⏳ Incomplete only</button>
+          </div>
+          <div class="topic-grid" id="topicGrid"></div>
+        </section>
+
+        <section class="page" id="page-resources">
+          <div class="section-head">
+            <div>
+              <h3>Learning resources</h3>
+              <p>Official documentation plus reinforcement material for each stage.</p>
+            </div>
+          </div>
+          <div class="resource-tabs" id="resourceTabs"></div>
+          <div class="resource-grid" id="resourceGrid"></div>
+        </section>
+
+        <section class="page" id="page-projects">
+          <div class="section-head">
+            <div>
+              <h3>Projects and capstones</h3>
+              <p>Use these to turn concepts into portfolio-ready proof of skill.</p>
+            </div>
+          </div>
+          <div class="project-grid" id="projectGrid"></div>
+        </section>
+
+        <section class="page" id="page-glossary">
+          <div class="section-head">
+            <div>
+              <h3>Glossary</h3>
+              <p>Quick definitions for the most important Shopify development terms.</p>
+            </div>
+          </div>
+          <div class="glossary-grid" id="glossaryGrid"></div>
+        </section>
+
+        <section class="page" id="page-planner">
+          <div class="section-head">
+            <div>
+              <h3>Study planner</h3>
+              <p>Set your daily study pace and get an estimated completion plan.</p>
+            </div>
+          </div>
+          <div class="planner-grid">
+            <div class="card planner-box">
+              <label for="dailyMinutes">Daily study target</label>
+              <div class="range-wrap">
+                <input id="dailyMinutes" type="range" min="15" max="180" step="15">
+                <strong id="dailyMinutesValue">45 min/day</strong>
+              </div>
+              <div class="small-meta" style="margin-top:14px;">
+                <span class="tag">Topics left: <strong id="plannerTopicsLeft">0</strong></span>
+                <span class="tag">Hours left: <strong id="plannerHoursLeft">0</strong></span>
+                <span class="tag">Est. days: <strong id="plannerDaysLeft">0</strong></span>
+              </div>
+              <div class="study-plan" id="studyPlan"></div>
+            </div>
+            <div class="card">
+              <h4 style="margin-top:0;">Recommended learning order</h4>
+              <p class="muted">This panel always prioritizes incomplete topics by chapter order so you maintain a sensible progression.</p>
+              <div id="plannerRecommendation" class="study-plan"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="drawer" id="topicDrawer" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="topicModalTitle">
+      <div class="modal-head">
+        <div>
+          <div id="topicModalPill"></div>
+          <h3 id="topicModalTitle" style="margin:10px 0 8px; font-size:28px; letter-spacing:-.03em;"></h3>
+          <p id="topicModalDesc" class="muted" style="max-width:740px; margin:0;"></p>
+          <div class="small-meta" id="topicModalMeta"></div>
+          <div class="tabs" id="modalTabs">
+            <button class="tab-btn active" data-tab="overview">Overview</button>
+            <button class="tab-btn" data-tab="code">Code</button>
+            <button class="tab-btn" data-tab="quiz">Quiz</button>
+            <button class="tab-btn" data-tab="notes">Notes</button>
+            <button class="tab-btn" data-tab="resources">Resources</button>
+          </div>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="ghost-btn" id="bookmarkTopicBtn">⭐ Bookmark</button>
+          <button class="primary-btn" id="completeTopicBtn">✓ Mark complete</button>
+          <button class="icon-btn" id="closeTopicBtn" aria-label="Close topic">✕</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="pane active" id="pane-overview">
+            <ul class="concept-list" id="conceptList"></ul>
+          </div>
+          <div class="pane" id="pane-code">
+            <div class="code-box">
+              <div class="code-head">
+                <span id="codeLangLabel">code</span>
+                <button class="mini-btn" id="copyCodeBtn" type="button">Copy code</button>
+              </div>
+              <pre><code id="topicCode"></code></pre>
+            </div>
+          </div>
+          <div class="pane" id="pane-quiz">
+            <div class="quiz-box">
+              <strong id="quizQuestion" style="display:block; font-size:18px;"></strong>
+              <div class="quiz-options" id="quizOptions"></div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;">
+                <button class="primary-btn" id="checkQuizBtn">Check answer</button>
+                <button class="ghost-btn" id="resetQuizBtn">Reset</button>
+              </div>
+              <div class="quiz-result" id="quizResult"></div>
+            </div>
+          </div>
+          <div class="pane" id="pane-notes">
+            <div class="note-box">
+              <label for="topicNotes" class="muted" style="display:block; margin-bottom:10px;">Your notes for this topic</label>
+              <textarea id="topicNotes" placeholder="Write summary points, gotchas, interview notes, project ideas..."></textarea>
+            </div>
+          </div>
+          <div class="pane" id="pane-resources">
+            <div class="resource-grid" id="topicResourceGrid" style="grid-template-columns:1fr 1fr;"></div>
+          </div>
+        </div>
+
+        <div class="side-stack">
+          <div class="stack-card">
+            <h4 style="margin:0 0 10px;">Learning checklist</h4>
+            <ul class="check-list">
+              <li><span>Topic completed</span><strong id="checkComplete">No</strong></li>
+              <li><span>Bookmarked</span><strong id="checkBookmark">No</strong></li>
+              <li><span>Quiz passed</span><strong id="checkQuiz">No</strong></li>
+              <li><span>Notes saved</span><strong id="checkNotes">No</strong></li>
+            </ul>
+          </div>
+          <div class="stack-card">
+            <h4 style="margin:0 0 10px;">Recommended next step</h4>
+            <p class="muted" id="nextTopicHint">Finish this topic, then move to the next item in the roadmap.</p>
+          </div>
+          <div class="stack-card">
+            <h4 style="margin:0 0 10px;">Why this matters</h4>
+            <p class="muted" id="topicWhy"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const TOPICS = [{"id": 1, "title": "Shopify Platform Fundamentals", "category": "foundation", "level": "Beginner", "time": 18, "chapterId": 1, "desc": "Understand how stores, themes, apps, APIs, products, customers, and checkout fit together.", "concepts": ["A Shopify store is made of storefront, admin, checkout, product/catalog, and app surfaces.", "Themes control the online storefront while apps extend admin, checkout, and merchant workflows.", "Online Store 2.0 introduced JSON templates, sections everywhere, and stronger theme flexibility.", "Most merchant customizations are either theme work, app work, or data-model work."], "codeLang": "text", "code": "Store → Theme → Liquid/JSON/CSS/JS → Customer storefront\nStore → Admin → Apps / GraphQL Admin API / Webhooks\nStore → Checkout / Accounts / Markets / Shipping / Payments", "quiz": {"question": "What is the best description of a Shopify theme?", "options": ["A database for products and orders", "The codebase that controls storefront presentation and theme settings", "A payment gateway", "A private app deployment server"], "answer": 1, "explanation": "Themes control storefront rendering, settings, sections, templates, CSS, JS, and Liquid."}, "resources": [{"label": "Shopify Themes overview", "url": "https://shopify.dev/docs/themes", "tag": "Official"}, {"label": "Getting started with Shopify development", "url": "https://shopify.dev/docs/apps/build", "tag": "Official"}]}, {"id": 2, "title": "Liquid Basics", "category": "liquid", "level": "Beginner", "time": 20, "chapterId": 2, "desc": "Learn output tags, control flow, assignment, loops, comments, and whitespace control.", "concepts": ["{{ }} outputs data and {% %} controls logic.", "Use assign, capture, if, unless, for, case, render, and paginate constantly.", "Whitespace control with {%- and -%} helps produce cleaner HTML.", "Liquid runs server-side and builds HTML before the browser executes JavaScript."], "codeLang": "liquid", "code": "{{ product.title }}\n{% assign featured = collection.products | first %}\n{% if product.available %}\n  <p>In stock</p>\n{% else %}\n  <p>Sold out</p>\n{% endif %}", "quiz": {"question": "Which tag outputs a value in Liquid?", "options": ["{% if %}", "{{ product.title }}", "{% assign %}", "{% render %}"], "answer": 1, "explanation": "{{ }} outputs values while {% %} is used for logic and control flow."}, "resources": [{"label": "Liquid reference", "url": "https://shopify.dev/docs/api/liquid", "tag": "Official"}]}, {"id": 3, "title": "Liquid Objects, Filters, and Data Flow", "category": "liquid", "level": "Beginner", "time": 22, "chapterId": 2, "desc": "Work with product, collection, cart, customer, request, shop, and theme settings data.", "concepts": ["Objects expose structured store data like product, cart, customer, collection, and shop.", "Filters transform values using the pipe operator.", "Liquid is strongest when you combine objects, control flow, and metafields.", "Always escape dynamic content where appropriate."], "codeLang": "liquid", "code": "{{ product.price | money }}\n{{ product.featured_image | image_url: width: 800 }}\n{% for tag in product.tags %}\n  <span>{{ tag | escape }}</span>\n{% endfor %}", "quiz": {"question": "What does a Liquid filter do?", "options": ["Sends a GraphQL request", "Modifies or transforms a value before output", "Defines a section schema", "Creates a new product metafield definition"], "answer": 1, "explanation": "Filters transform values, such as formatting money, dates, images, arrays, and strings."}, "resources": [{"label": "Liquid objects", "url": "https://shopify.dev/docs/api/liquid/objects", "tag": "Official"}, {"label": "Liquid filters", "url": "https://shopify.dev/docs/api/liquid/filters", "tag": "Official"}]}, {"id": 4, "title": "Theme File Structure and Architecture", "category": "theme", "level": "Beginner", "time": 18, "chapterId": 3, "desc": "Understand layouts, templates, sections, snippets, assets, locales, and config.", "concepts": ["layout/theme.liquid is the main shell for most storefront pages.", "Sections are reusable blocks of UI and snippets are smaller partials.", "Templates connect routes to sections or Liquid markup.", "Config and locale files drive theme settings and translations."], "codeLang": "text", "code": "layout/\ntemplates/\nsections/\nsnippets/\nassets/\nconfig/\nlocales/", "quiz": {"question": "Where do reusable small partials usually live in a Shopify theme?", "options": ["assets", "snippets", "config", "locales"], "answer": 1, "explanation": "Snippets are intended for reusable theme partials."}, "resources": [{"label": "Theme architecture", "url": "https://shopify.dev/docs/storefronts/themes/architecture", "tag": "Official"}]}, {"id": 5, "title": "Sections, Blocks, and Schema", "category": "theme", "level": "Intermediate", "time": 24, "chapterId": 3, "desc": "Build merchant-editable storefront modules with section schema and dynamic blocks.", "concepts": ["Sections are configurable components rendered by templates or JSON templates.", "Schema controls settings, blocks, presets, labels, and defaults in the customizer.", "Blocks make sections flexible and merchant-controlled.", "Keep sections resilient with good defaults and defensive Liquid."], "codeLang": "liquid", "code": "{% for block in section.blocks %}\n  {% case block.type %}\n    {% when 'heading' %}<h2>{{ block.settings.text }}</h2>\n    {% when 'cta' %}<a href='{{ block.settings.url }}'>{{ block.settings.label }}</a>\n  {% endcase %}\n{% endfor %}\n\n{% schema %}\n{ \"name\": \"Hero\", \"blocks\": [{ \"type\": \"heading\", \"name\": \"Heading\" }] }\n{% endschema %}", "quiz": {"question": "What controls merchant-editable settings for a section?", "options": ["locales JSON", "schema", "webhooks", "theme.liquid only"], "answer": 1, "explanation": "The section schema defines settings, blocks, presets, and editor metadata."}, "resources": [{"label": "Sections and blocks", "url": "https://shopify.dev/docs/storefronts/themes/architecture/sections", "tag": "Official"}]}, {"id": 6, "title": "JSON Templates and Section Rendering", "category": "theme", "level": "Intermediate", "time": 20, "chapterId": 3, "desc": "Use JSON templates for flexible page composition and dynamic rendering patterns.", "concepts": ["JSON templates allow merchants to add, reorder, and configure sections on many page types.", "Templates define which sections render and with what order.", "Section Rendering API can refresh only part of the page after cart or variant events.", "This pattern is central to modern Dawn-style themes."], "codeLang": "json", "code": "{\n  \"sections\": {\n    \"main\": { \"type\": \"main-product\" },\n    \"upsell\": { \"type\": \"featured-collection\" }\n  },\n  \"order\": [\"main\", \"upsell\"]\n}", "quiz": {"question": "What is the main advantage of JSON templates?", "options": ["They replace all JavaScript", "They allow flexible section composition and ordering in the editor", "They create webhook subscriptions", "They only work for apps"], "answer": 1, "explanation": "JSON templates allow merchants and developers to compose pages from sections."}, "resources": [{"label": "JSON templates", "url": "https://shopify.dev/docs/storefronts/themes/architecture/templates/json-templates", "tag": "Official"}]}, {"id": 7, "title": "Metafields and Metaobjects", "category": "data", "level": "Intermediate", "time": 26, "chapterId": 4, "desc": "Model structured custom data for products, collections, pages, and reusable content entries.", "concepts": ["Metafields attach custom data to store resources.", "Metaobjects create reusable content models like FAQs, badges, guides, and authors.", "Definitions make fields typed, validated, and editor-friendly.", "Good data modeling reduces theme hacks and makes content scalable."], "codeLang": "liquid", "code": "{{ product.metafields.custom.subtitle }}\n{% assign badges = product.metafields.custom.badges.value %}\n{% for badge in badges %}\n  <span>{{ badge.title }}</span>\n{% endfor %}", "quiz": {"question": "When should you choose a metaobject over a plain text metafield?", "options": ["When you need reusable structured content entries", "When you need CSS variables", "When you need to send webhooks", "When you need app billing"], "answer": 0, "explanation": "Metaobjects are ideal for reusable structured content with multiple fields."}, "resources": [{"label": "Metafields", "url": "https://shopify.dev/docs/apps/build/custom-data/metafields", "tag": "Official"}, {"label": "Metaobjects", "url": "https://shopify.dev/docs/apps/build/custom-data/metaobjects", "tag": "Official"}]}, {"id": 8, "title": "AJAX Cart API", "category": "frontend", "level": "Intermediate", "time": 18, "chapterId": 5, "desc": "Add, update, and render cart state without full page reloads.", "concepts": ["Use /cart/add.js, /cart/change.js, /cart/update.js, and /cart.js.", "Combine cart requests with Section Rendering API for cart drawer refreshes.", "Always show loading, success, and error states.", "Keep logic decoupled with custom events or a lightweight pub/sub pattern."], "codeLang": "js", "code": "async function addToCart(id, quantity = 1) {\n  const res = await fetch('/cart/add.js', {\n    method: 'POST',\n    headers: { 'Content-Type': 'application/json' },\n    body: JSON.stringify({ id, quantity })\n  });\n  return res.json();\n}", "quiz": {"question": "Which endpoint reads the current cart as JSON?", "options": ["/cart/read.js", "/cart.js", "/cart/items.json", "/cart/state.js"], "answer": 1, "explanation": "/cart.js returns the current cart state in JSON."}, "resources": [{"label": "AJAX API", "url": "https://shopify.dev/docs/api/ajax", "tag": "Official"}]}, {"id": 9, "title": "Theme JavaScript Patterns and Custom Elements", "category": "frontend", "level": "Intermediate", "time": 22, "chapterId": 5, "desc": "Build maintainable theme interactivity with custom elements, events, and progressive enhancement.", "concepts": ["Avoid tangled global scripts; favor isolated components.", "Custom elements work well for cart forms, drawers, modals, and media galleries.", "Use event delegation and aria states for accessible interactions.", "Progressive enhancement keeps the storefront usable when JS is reduced."], "codeLang": "js", "code": "class CartDrawer extends HTMLElement {\n  open() { this.setAttribute('open', ''); }\n  close() { this.removeAttribute('open'); }\n}\ncustomElements.define('cart-drawer', CartDrawer);", "quiz": {"question": "Why are custom elements useful in Shopify themes?", "options": ["They replace Liquid completely", "They encapsulate behavior for reusable UI components", "They are required for Admin API access", "They store metafield definitions"], "answer": 1, "explanation": "Custom elements are great for reusable, encapsulated UI behaviors."}, "resources": [{"label": "Theme best practices", "url": "https://shopify.dev/docs/storefronts/themes/best-practices", "tag": "Official"}]}, {"id": 10, "title": "Theme Performance and Core UX", "category": "frontend", "level": "Intermediate", "time": 24, "chapterId": 5, "desc": "Improve loading, image delivery, interaction responsiveness, and perceived storefront quality.", "concepts": ["Optimize images, fonts, script loading, and render-blocking CSS.", "Only load section-specific JS when needed.", "Measure before and after using Lighthouse and real storefront testing.", "Speed improvements should never break accessibility or merchant flexibility."], "codeLang": "liquid", "code": "{{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400, 800, 1200' }}", "quiz": {"question": "What is a strong first step for theme performance work?", "options": ["Ship more third-party scripts", "Measure current performance and remove unnecessary payloads", "Use only inline CSS everywhere", "Disable merchant settings"], "answer": 1, "explanation": "Performance work should begin with measurement and unnecessary payload reduction."}, "resources": [{"label": "Performance best practices", "url": "https://shopify.dev/docs/storefronts/themes/best-practices/performance", "tag": "Official"}]}, {"id": 11, "title": "Accessibility in Shopify Themes", "category": "frontend", "level": "Intermediate", "time": 20, "chapterId": 6, "desc": "Build keyboard-friendly, screen-reader-friendly, and resilient storefront experiences.", "concepts": ["Accessible patterns matter for drawers, modals, menus, forms, and carousels.", "Use semantic HTML before adding ARIA.", "Always manage focus for overlays and dynamic panels.", "Contrast, headings, labels, and announcements are just as important as visuals."], "codeLang": "html", "code": "<button aria-expanded='false' aria-controls='mobile-menu'>Menu</button>\n<nav id='mobile-menu' hidden>...</nav>", "quiz": {"question": "What should happen when a modal opens?", "options": ["Nothing special", "Focus should move into the modal and return on close", "The page should reload", "All buttons should be removed"], "answer": 1, "explanation": "Focus management is essential for accessible modals and drawers."}, "resources": [{"label": "Accessibility best practices", "url": "https://shopify.dev/docs/storefronts/themes/best-practices/accessibility", "tag": "Official"}]}, {"id": 12, "title": "Admin GraphQL API", "category": "api", "level": "Intermediate", "time": 28, "chapterId": 7, "desc": "Query and mutate products, customers, orders, discounts, and app data through GraphQL.", "concepts": ["GraphQL lets you ask for exactly the fields you need.", "Use connections, edges, nodes, mutations, and cost awareness.", "Admin API is usually the best choice for modern Shopify app development.", "Versioning and scopes matter for every integration."], "codeLang": "graphql", "code": "query Products($first: Int!) {\n  products(first: $first) {\n    nodes {\n      id\n      title\n      handle\n      status\n    }\n  }\n}", "quiz": {"question": "Why is GraphQL often preferred for modern Shopify app work?", "options": ["It has no authentication", "It lets you fetch exactly the fields you need", "It works only in themes", "It replaces webhooks"], "answer": 1, "explanation": "GraphQL reduces overfetching and is the core modern Shopify API style."}, "resources": [{"label": "Admin GraphQL API", "url": "https://shopify.dev/docs/api/admin-graphql", "tag": "Official"}]}, {"id": 13, "title": "Storefront API and Headless Data", "category": "api", "level": "Intermediate", "time": 24, "chapterId": 7, "desc": "Fetch customer-facing catalog and cart data for headless storefronts and Hydrogen apps.", "concepts": ["Storefront API is for customer-facing experiences, not merchant admin workflows.", "It powers headless storefronts, custom carts, and Hydrogen.", "Think carefully about cache strategy, token handling, and internationalized data.", "Data access depends on storefront publication and permissions."], "codeLang": "graphql", "code": "query ProductByHandle($handle: String!) {\n  product(handle: $handle) {\n    id\n    title\n    availableForSale\n  }\n}", "quiz": {"question": "Which API is primarily meant for customer-facing storefront data?", "options": ["Admin GraphQL API", "Storefront API", "AJAX API only", "Theme Check API"], "answer": 1, "explanation": "The Storefront API powers customer-facing headless experiences."}, "resources": [{"label": "Storefront API", "url": "https://shopify.dev/docs/api/storefront", "tag": "Official"}]}, {"id": 14, "title": "Webhooks and HMAC Verification", "category": "api", "level": "Advanced", "time": 22, "chapterId": 7, "desc": "React to store events safely and verify webhook authenticity before processing payloads.", "concepts": ["Webhooks notify your app when important events occur.", "You must verify the HMAC signature against the raw request body.", "Respond quickly, then process heavier work asynchronously.", "Use idempotency and logging to avoid duplicate side effects."], "codeLang": "js", "code": "import crypto from 'node:crypto';\n\nfunction verifyWebhook(rawBody, hmacHeader, secret) {\n  const digest = crypto.createHmac('sha256', secret).update(rawBody).digest('base64');\n  return crypto.timingSafeEqual(Buffer.from(digest), Buffer.from(hmacHeader));\n}", "quiz": {"question": "What should you verify before trusting a webhook payload?", "options": ["Theme settings", "HMAC signature", "Customer tags", "Metaobject type"], "answer": 1, "explanation": "HMAC verification ensures the payload came from Shopify."}, "resources": [{"label": "Webhooks", "url": "https://shopify.dev/docs/apps/build/webhooks", "tag": "Official"}]}, {"id": 15, "title": "App OAuth, Session Tokens, and Security", "category": "apps", "level": "Advanced", "time": 30, "chapterId": 8, "desc": "Secure embedded app authentication and protect server-side app flows properly.", "concepts": ["OAuth installs the app and grants scopes.", "Session tokens help verify requests from the embedded frontend.", "Never trust client-side claims without backend validation.", "Scope design, token storage, and rotation strategy matter for security."], "codeLang": "js", "code": "app.get('/auth', async (req, res) => {\n  // Redirect merchant to Shopify OAuth flow\n});\n\napp.get('/auth/callback', async (req, res) => {\n  // Exchange code for access token and persist session\n});", "quiz": {"question": "What is the main purpose of OAuth in a Shopify app?", "options": ["To style the embedded app", "To install the app and grant authorized access", "To render Liquid templates", "To update theme CSS"], "answer": 1, "explanation": "OAuth establishes an authorized installation and scoped access."}, "resources": [{"label": "App authentication", "url": "https://shopify.dev/docs/apps/build/authentication-authorization", "tag": "Official"}]}, {"id": 16, "title": "App Bridge, Polaris, and Embedded UX", "category": "apps", "level": "Intermediate", "time": 22, "chapterId": 8, "desc": "Build admin-native app experiences with embedded navigation, actions, and merchant-friendly UI.", "concepts": ["Embedded apps should feel native inside Shopify Admin.", "Polaris provides design primitives and patterns for merchant workflows.", "App Bridge helps with navigation, resource pickers, modals, and context integration.", "Merchant trust improves when your UX aligns with admin patterns."], "codeLang": "jsx", "code": "export default function Dashboard() {\n  return (\n    <Page title='App dashboard'>\n      <Card>\n        <Text as='h2' variant='headingMd'>Welcome</Text>\n      </Card>\n    </Page>\n  );\n}", "quiz": {"question": "Why should embedded apps use admin-native patterns?", "options": ["To reduce merchant friction and feel consistent inside Shopify", "Because GraphQL requires it", "Because themes cannot load JavaScript otherwise", "To disable mobile usage"], "answer": 0, "explanation": "Consistency with the admin improves trust and usability."}, "resources": [{"label": "App Bridge", "url": "https://shopify.dev/docs/api/app-bridge", "tag": "Official"}, {"label": "Polaris", "url": "https://shopify.dev/docs/apps/design", "tag": "Official"}]}, {"id": 17, "title": "Billing, App Review, and Production Readiness", "category": "apps", "level": "Advanced", "time": 24, "chapterId": 8, "desc": "Prepare apps for pricing, app review, onboarding, logs, and real merchant support.", "concepts": ["Billing design affects conversion and merchant trust.", "App review needs clear flows, permissions justification, and stable behavior.", "Production readiness includes logging, alerts, onboarding, retries, and support paths.", "Documentation and merchant education are product features, not extras."], "codeLang": "text", "code": "Production checklist:\n- Logging and error monitoring\n- Scope audit\n- Clear onboarding\n- Billing test flows\n- Review checklist\n- Support docs", "quiz": {"question": "Which item is most important before submitting an app for real merchants?", "options": ["Only a pretty logo", "Stable flows, clear permissions, logging, and onboarding", "Removing all documentation", "Skipping test stores"], "answer": 1, "explanation": "Production readiness is broader than UI polish; it includes trust, stability, and support."}, "resources": [{"label": "Monetize your app", "url": "https://shopify.dev/docs/apps/launch/billing", "tag": "Official"}]}, {"id": 18, "title": "Shopify Functions", "category": "advanced", "level": "Advanced", "time": 26, "chapterId": 9, "desc": "Customize discounts, shipping, payment, validation, and other commerce logic with Functions.", "concepts": ["Functions replace older script-based customization patterns for many use cases.", "They run on Shopify infrastructure with specific extension targets.", "Input schema, deterministic logic, and deployment flow matter.", "Functions are a major differentiator for advanced Shopify work."], "codeLang": "rust", "code": "fn function(input: schema::Input) -> schema::Output {\n    schema::Output { operations: vec![] }\n}", "quiz": {"question": "What makes Shopify Functions powerful?", "options": ["They edit products manually in the admin", "They let you customize core commerce logic on Shopify infrastructure", "They are only for CSS", "They replace all themes"], "answer": 1, "explanation": "Functions extend core commerce behavior such as discounts and validations."}, "resources": [{"label": "Shopify Functions", "url": "https://shopify.dev/docs/apps/build/functions", "tag": "Official"}]}, {"id": 19, "title": "Checkout UI Extensions", "category": "advanced", "level": "Advanced", "time": 22, "chapterId": 9, "desc": "Extend checkout and post-purchase experiences using modern extension surfaces.", "concepts": ["Checkout extensibility uses extension points rather than legacy checkout hacks.", "Keep logic focused, fast, and clearly useful to the shopper.", "Extension lifecycle and merchant configuration matter.", "Checkout customization strategy differs by plan and surface."], "codeLang": "tsx", "code": "export default reactExtension('purchase.checkout.block.render', () => <Banner>Need help?</Banner>);", "quiz": {"question": "What is the modern direction for checkout customization?", "options": ["Editing checkout.liquid directly for every store", "Using supported checkout extension surfaces", "Embedding Liquid inside webhooks", "Replacing checkout with AJAX API"], "answer": 1, "explanation": "Modern checkout customization is centered on supported extension points."}, "resources": [{"label": "Checkout UI extensions", "url": "https://shopify.dev/docs/api/checkout-ui-extensions", "tag": "Official"}]}, {"id": 20, "title": "Hydrogen Fundamentals", "category": "advanced", "level": "Advanced", "time": 28, "chapterId": 10, "desc": "Build headless storefronts with React, server components, and Storefront API patterns.", "concepts": ["Hydrogen is Shopify's React framework for headless commerce.", "Use it when storefront requirements justify added architecture complexity.", "Think about routing, caching, cart state, localization, and preview workflows.", "Headless is powerful but should be justified by real product needs."], "codeLang": "jsx", "code": "export async function loader({context, params}) {\n  return context.storefront.query(PRODUCT_QUERY, { variables: { handle: params.handle } });\n}", "quiz": {"question": "When is Hydrogen usually the right choice?", "options": ["For every simple brochure store", "When headless requirements justify extra complexity and control", "Only for private apps", "Only for B2B invoices"], "answer": 1, "explanation": "Hydrogen is powerful, but it should be chosen for real headless needs."}, "resources": [{"label": "Hydrogen", "url": "https://shopify.dev/docs/storefronts/headless/hydrogen", "tag": "Official"}]}, {"id": 21, "title": "Oxygen Deployment and Caching Strategy", "category": "advanced", "level": "Advanced", "time": 18, "chapterId": 10, "desc": "Deploy Hydrogen apps and design cache behavior for fast storefront responses.", "concepts": ["Oxygen is Shopify's hosting platform for Hydrogen storefronts.", "Caching strategy affects speed, freshness, and infrastructure cost.", "Design around stale-while-revalidate style thinking where appropriate.", "Preview, production, logs, and release hygiene matter in headless delivery."], "codeLang": "js", "code": "return json(data, {\n  headers: {\n    'Cache-Control': 'public, max-age=60, stale-while-revalidate=300'\n  }\n});", "quiz": {"question": "Why is caching critical in headless storefronts?", "options": ["Because React cannot render without it", "Because it strongly affects speed, cost, and data freshness", "Because it replaces authentication", "Because it stores metafield definitions"], "answer": 1, "explanation": "Caching is one of the most important headless architecture decisions."}, "resources": [{"label": "Oxygen", "url": "https://shopify.dev/docs/storefronts/headless/hydrogen/deployments", "tag": "Official"}]}, {"id": 22, "title": "Markets, Localization, and International Selling", "category": "advanced", "level": "Advanced", "time": 24, "chapterId": 11, "desc": "Prepare storefronts for currencies, languages, domains, and region-aware content.", "concepts": ["Markets influence pricing, language, domains, duties, and localization behavior.", "Theme content and data modeling should support regional variation cleanly.", "International selling affects product data, SEO, checkout, and support flows.", "Testing by market is essential."], "codeLang": "liquid", "code": "{{ localization.country.iso_code }}\n{{ localization.language.iso_code }}", "quiz": {"question": "What is a common risk in market-aware storefront work?", "options": ["Ignoring differences in locale, currency, and content requirements", "Using sections", "Using GraphQL", "Creating snippets"], "answer": 0, "explanation": "International commerce requires thoughtful handling of content, pricing, and locale."}, "resources": [{"label": "Markets", "url": "https://shopify.dev/docs/apps/build/markets", "tag": "Official"}]}, {"id": 23, "title": "B2B, Shopify Plus, and Enterprise Patterns", "category": "advanced", "level": "Advanced", "time": 20, "chapterId": 11, "desc": "Understand enterprise requirements like catalogs, pricing logic, approval flows, and account complexity.", "concepts": ["B2B adds customer-company relationships, catalog complexity, and pricing nuance.", "Enterprise projects usually require stronger QA, integrations, and governance.", "Technical success depends on data modeling and operational workflow, not just theme work.", "Be explicit about plan-dependent features in solution design."], "codeLang": "text", "code": "Enterprise focus areas:\n- Catalog strategy\n- Customer/company structure\n- Pricing and approvals\n- Integrations\n- QA and deployment controls", "quiz": {"question": "What usually makes B2B builds more complex than a simple DTC storefront?", "options": ["Only color palette decisions", "Catalog, pricing, account, and workflow complexity", "No need for data modeling", "Less QA is needed"], "answer": 1, "explanation": "B2B brings more operational, data, and customer-account complexity."}, "resources": [{"label": "B2B", "url": "https://shopify.dev/docs/apps/build/b2b", "tag": "Official"}]}, {"id": 24, "title": "Customer Accounts and Self-Service UX", "category": "advanced", "level": "Advanced", "time": 18, "chapterId": 11, "desc": "Design account experiences that reduce support load and improve repeat purchase journeys.", "concepts": ["Account UX affects support burden, retention, and trust.", "Modern account extensions and APIs should be planned together.", "Use self-service flows for order visibility, preferences, and profile management.", "Keep permissions and privacy concerns explicit."], "codeLang": "text", "code": "Account UX checklist:\n- Login clarity\n- Order history\n- Address management\n- Preference center\n- Support fallback", "quiz": {"question": "Why does account UX matter strategically?", "options": ["It only matters for designers", "It improves support efficiency and customer retention", "It disables checkout", "It replaces billing"], "answer": 1, "explanation": "Good self-service account UX helps both customers and operations."}, "resources": [{"label": "Customer accounts", "url": "https://shopify.dev/docs/storefronts/themes/customer-engagement/customer-accounts", "tag": "Official"}]}, {"id": 25, "title": "Testing, QA, and Debugging Workflow", "category": "pro", "level": "Intermediate", "time": 22, "chapterId": 12, "desc": "Create a delivery workflow with QA checklists, logging, linting, and environment discipline.", "concepts": ["Use Theme Check, linting, browser devtools, preview themes, and API logs.", "Always test merchant settings, edge cases, translations, and no-data states.", "Good QA includes accessibility, performance, and regression coverage.", "A shipping checklist prevents expensive client mistakes."], "codeLang": "bash", "code": "shopify theme check\nnpm run lint\nnpm run test", "quiz": {"question": "What is a hallmark of strong Shopify QA?", "options": ["Testing only the happy path", "Testing settings, edge cases, fallback states, and regressions", "Skipping preview themes", "Avoiding performance checks"], "answer": 1, "explanation": "Strong QA covers both normal and edge-case storefront behavior."}, "resources": [{"label": "Theme Check", "url": "https://shopify.dev/docs/storefronts/themes/tools/theme-check", "tag": "Official"}]}, {"id": 26, "title": "Git, Deployment, and Client Handoff", "category": "pro", "level": "Intermediate", "time": 18, "chapterId": 12, "desc": "Ship safely with branching, release notes, preview environments, and clean handoff documentation.", "concepts": ["Use Git and preview themes for safer collaboration.", "Separate development, QA, and production release habits.", "Client handoff should include SOPs, known limits, and maintenance notes.", "Delivery quality is not only code; it is also clarity and operational readiness."], "codeLang": "bash", "code": "git checkout -b feature/cart-upsell\nshopify theme dev\nshopify theme push --unpublished\n# QA\nshopify theme push --theme 123456789", "quiz": {"question": "What makes a handoff strong?", "options": ["Only sending theme files", "Clear release notes, SOPs, known limits, and rollback awareness", "Deleting documentation", "Skipping QA evidence"], "answer": 1, "explanation": "A good handoff makes the store maintainable after delivery."}, "resources": [{"label": "Shopify CLI", "url": "https://shopify.dev/docs/storefronts/themes/tools/cli", "tag": "Official"}]}];
+    const CHAPTERS = [{"id": 1, "title": "Platform Foundations", "summary": "Understand the ecosystem before writing code.", "topicIds": [1]}, {"id": 2, "title": "Liquid Core", "summary": "Learn Shopify templating and dynamic data output.", "topicIds": [2, 3]}, {"id": 3, "title": "Theme Architecture", "summary": "Master theme structure, sections, blocks, and JSON templates.", "topicIds": [4, 5, 6]}, {"id": 4, "title": "Custom Data Modeling", "summary": "Use metafields and metaobjects for scalable content.", "topicIds": [7]}, {"id": 5, "title": "Frontend Interactivity", "summary": "Cart, rendering, performance, and JavaScript architecture.", "topicIds": [8, 9, 10]}, {"id": 6, "title": "Accessibility and UX Quality", "summary": "Build storefronts that are more inclusive and resilient.", "topicIds": [11]}, {"id": 7, "title": "API Integration", "summary": "Work with Admin GraphQL, Storefront API, and webhooks.", "topicIds": [12, 13, 14]}, {"id": 8, "title": "App Development", "summary": "Learn authentication, embedded UX, and app production readiness.", "topicIds": [15, 16, 17]}, {"id": 9, "title": "Commerce Extensibility", "summary": "Go deeper with Functions and Checkout UI Extensions.", "topicIds": [18, 19]}, {"id": 10, "title": "Headless Commerce", "summary": "Build with Hydrogen, Oxygen, and sound cache strategy.", "topicIds": [20, 21]}, {"id": 11, "title": "Advanced Commerce Strategy", "summary": "Prepare for markets, B2B, and account complexity.", "topicIds": [22, 23, 24]}, {"id": 12, "title": "Professional Delivery", "summary": "Ship like a pro with QA, Git, deployment, and handoff.", "topicIds": [25, 26]}];
+    const RESOURCES = {"beginner": [{"title": "Shopify Dev Docs Home", "desc": "Primary documentation hub for themes, apps, APIs, and headless.", "url": "https://shopify.dev/docs", "tags": ["Official", "Docs"]}, {"title": "Liquid Reference", "desc": "Learn syntax, filters, objects, and tags.", "url": "https://shopify.dev/docs/api/liquid", "tags": ["Official", "Liquid"]}, {"title": "Theme Architecture", "desc": "File structure, templates, sections, and best practices.", "url": "https://shopify.dev/docs/storefronts/themes/architecture", "tags": ["Official", "Themes"]}, {"title": "AJAX API", "desc": "Cart endpoints and storefront interactivity basics.", "url": "https://shopify.dev/docs/api/ajax", "tags": ["Official", "Frontend"]}], "intermediate": [{"title": "Metafields and Metaobjects", "desc": "Model reusable custom data cleanly.", "url": "https://shopify.dev/docs/apps/build/custom-data", "tags": ["Official", "Data"]}, {"title": "Admin GraphQL API", "desc": "Core admin integration reference.", "url": "https://shopify.dev/docs/api/admin-graphql", "tags": ["Official", "API"]}, {"title": "App Authentication", "desc": "Install, OAuth, sessions, and security foundations.", "url": "https://shopify.dev/docs/apps/build/authentication-authorization", "tags": ["Official", "Apps"]}, {"title": "Theme Best Practices", "desc": "Architecture, performance, and accessibility guidance.", "url": "https://shopify.dev/docs/storefronts/themes/best-practices", "tags": ["Official", "Themes"]}], "advanced": [{"title": "Shopify Functions", "desc": "Build modern commerce logic extensions.", "url": "https://shopify.dev/docs/apps/build/functions", "tags": ["Official", "Functions"]}, {"title": "Checkout UI Extensions", "desc": "Checkout extensibility reference.", "url": "https://shopify.dev/docs/api/checkout-ui-extensions", "tags": ["Official", "Checkout"]}, {"title": "Hydrogen", "desc": "Headless storefront development with React.", "url": "https://shopify.dev/docs/storefronts/headless/hydrogen", "tags": ["Official", "Headless"]}, {"title": "Oxygen Deployments", "desc": "Deployment and hosting reference for Hydrogen.", "url": "https://shopify.dev/docs/storefronts/headless/hydrogen/deployments", "tags": ["Official", "Hosting"]}], "videos": [{"title": "Build a Shopify Theme from Scratch", "desc": "Use as a project-style reinforcement after Liquid and sections.", "url": "https://www.youtube.com/results?search_query=shopify+theme+development+from+scratch", "tags": ["Video", "Themes"]}, {"title": "Shopify App Development Tutorial", "desc": "Useful after finishing the API and app chapters.", "url": "https://www.youtube.com/results?search_query=shopify+app+development+tutorial", "tags": ["Video", "Apps"]}, {"title": "Hydrogen Crash Course", "desc": "Great for reinforcing headless concepts.", "url": "https://www.youtube.com/results?search_query=shopify+hydrogen+tutorial", "tags": ["Video", "Headless"]}], "tools": [{"title": "Shopify CLI", "desc": "Local development, push, pull, deploy, and app workflows.", "url": "https://shopify.dev/docs/storefronts/themes/tools/cli", "tags": ["Tool", "CLI"]}, {"title": "Theme Check", "desc": "Lint your themes and catch quality issues early.", "url": "https://shopify.dev/docs/storefronts/themes/tools/theme-check", "tags": ["Tool", "QA"]}, {"title": "GraphiQL App / Query Explorers", "desc": "Test GraphQL queries safely while learning.", "url": "https://shopify.dev/docs/api/usage/api-exploration", "tags": ["Tool", "GraphQL"]}]};
+    const PROJECTS = [{"title": "OS 2.0 Product Page Upgrade", "level": "Intermediate", "time": "4–6 hrs", "goal": "Build a product page with sections, blocks, metafields, badges, and a performant gallery.", "deliverables": ["Custom product information section", "Metafield-driven trust badges", "Accessible accordion", "Performance pass"]}, {"title": "AJAX Cart Drawer", "level": "Intermediate", "time": "3–5 hrs", "goal": "Create a dynamic cart drawer using AJAX Cart API plus section rendering updates.", "deliverables": ["Add to cart flow", "Drawer refresh", "Error state handling", "Cart count sync"]}, {"title": "Embedded Admin App MVP", "level": "Advanced", "time": "8–12 hrs", "goal": "Build an embedded app with OAuth, session handling, Polaris UI, and one GraphQL workflow.", "deliverables": ["Install flow", "Authenticated backend route", "Merchant dashboard", "One mutation workflow"]}, {"title": "Hydrogen Mini Storefront", "level": "Advanced", "time": "8–14 hrs", "goal": "Ship a mini headless storefront with product route, cart, and Oxygen-ready caching.", "deliverables": ["Product loader", "Cart state", "Localized UI", "Cache-control strategy"]}];
+    const GLOSSARY = [{"term": "Liquid", "def": "Shopify's server-side templating language used in themes."}, {"term": "Section", "def": "A configurable storefront component that merchants can edit in the theme customizer."}, {"term": "Block", "def": "A configurable unit nested inside a section."}, {"term": "Metafield", "def": "Custom data attached to Shopify resources such as products or collections."}, {"term": "Metaobject", "def": "A reusable structured content model with multiple fields."}, {"term": "Admin API", "def": "Merchant-facing API surface for products, orders, customers, and app workflows."}, {"term": "Storefront API", "def": "Customer-facing GraphQL API for headless storefronts and carts."}, {"term": "Webhook", "def": "A server-to-server event notification sent by Shopify."}, {"term": "App Bridge", "def": "A library that helps embedded apps integrate with Shopify Admin context."}, {"term": "Polaris", "def": "Shopify's design system for admin-facing app interfaces."}, {"term": "Function", "def": "A Shopify extension that customizes core commerce logic."}, {"term": "Hydrogen", "def": "Shopify's React framework for headless commerce storefronts."}, {"term": "Oxygen", "def": "Shopify's hosting platform for Hydrogen storefronts."}, {"term": "Markets", "def": "Shopify features for international selling across regions and locales."}, {"term": "Theme Check", "def": "A linter and quality tool for Shopify themes."}];
+
+    const STORAGE_KEY = 'shopify_mastery_academy_pro_v2';
+    const state = loadState();
+    let currentPage = 'overview';
+    let currentCategory = 'all';
+    let currentLevel = 'all';
+    let bookmarkedOnly = false;
+    let incompleteOnly = false;
+    let currentTopicId = null;
+    let currentResourceTab = 'beginner';
+
+    function loadState() {
+      const defaults = {
+        theme: 'dark',
+        done: {},
+        bookmarked: {},
+        notes: {},
+        quizPassed: {},
+        dailyMinutes: 45,
+        lastActiveDate: null,
+        streak: 0
+      };
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        return Object.assign(defaults, saved, {
+          done: saved.done || {},
+          bookmarked: saved.bookmarked || {},
+          notes: saved.notes || {},
+          quizPassed: saved.quizPassed || {}
+        });
+      } catch {
+        return defaults;
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderAllStats();
+    }
+
+    function todayISO() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function updateStreak() {
+      const today = todayISO();
+      if (!state.lastActiveDate) {
+        state.lastActiveDate = today;
+        state.streak = 1;
+        saveState();
+        return;
+      }
+      if (state.lastActiveDate === today) return;
+      const last = new Date(state.lastActiveDate);
+      const now = new Date(today);
+      const diff = Math.round((now - last) / 86400000);
+      state.streak = diff === 1 ? (state.streak || 0) + 1 : 1;
+      state.lastActiveDate = today;
+      saveState();
+    }
+
+    function qs(sel, root = document) { return root.querySelector(sel); }
+    function qsa(sel, root = document) { return [...root.querySelectorAll(sel)]; }
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function getTopic(id) {
+      return TOPICS.find(t => t.id === Number(id));
+    }
+
+    function isDone(id) { return !!state.done[id]; }
+    function isBookmarked(id) { return !!state.bookmarked[id]; }
+    function hasNotes(id) { return !!(state.notes[id] && state.notes[id].trim()); }
+    function quizPassed(id) { return !!state.quizPassed[id]; }
+
+    function getNextIncompleteTopic() {
+      return TOPICS.find(t => !isDone(t.id)) || TOPICS[0];
+    }
+
+    function calcStats() {
+      const completed = TOPICS.filter(t => isDone(t.id)).length;
+      const bookmarked = TOPICS.filter(t => isBookmarked(t.id)).length;
+      const minutesLeft = TOPICS.filter(t => !isDone(t.id)).reduce((sum, t) => sum + t.time, 0);
+      const percentage = Math.round((completed / TOPICS.length) * 100);
+      return { completed, bookmarked, minutesLeft, percentage };
+    }
+
+    function renderAllStats() {
+      const stats = calcStats();
+      qs('#statTopics').textContent = TOPICS.length;
+      qs('#statCompleted').textContent = stats.completed;
+      qs('#statBookmarks').textContent = stats.bookmarked;
+      qs('#statMinutes').textContent = (stats.minutesLeft / 60).toFixed(1);
+      qs('#roadmapProgress').style.width = `${stats.percentage}%`;
+      qs('#roadmapProgressBadge').textContent = `${stats.percentage}% complete`;
+      qs('#roadmapMeta').innerHTML = `
+        <span class="tag">Completed: <strong>${stats.completed} / ${TOPICS.length}</strong></span>
+        <span class="tag">Bookmarks: <strong>${stats.bookmarked}</strong></span>
+        <span class="tag">Daily target: <strong>${state.dailyMinutes} min</strong></span>
+        <span class="tag">Streak: <strong>${state.streak || 1} day${(state.streak || 1) > 1 ? 's' : ''}</strong></span>
+      `;
+      qs('#topicCountBadge').textContent = TOPICS.length;
+      qs('#chapterCountBadge').textContent = CHAPTERS.length;
+      renderContinueCard();
+      renderPlanner();
+      renderRoadmap();
+      if (currentPage === 'topics') renderTopics();
+    }
+
+    function renderContinueCard() {
+      const next = getNextIncompleteTopic();
+      const completed = calcStats().completed;
+      qs('#continueCard').innerHTML = `
+        <div class="card-top">
+          <div>
+            <div class="pill ${next.category}">${next.category}</div>
+            <h4 style="margin:12px 0 8px; font-size:22px;">${escapeHtml(next.title)}</h4>
+            <p class="muted">${escapeHtml(next.desc)}</p>
+          </div>
+          <div class="badge">${completed} / ${TOPICS.length} done</div>
+        </div>
+        <div class="small-meta">
+          <span class="tag">${next.level}</span>
+          <span class="tag">${next.time} min</span>
+          <span class="tag">Chapter ${next.chapterId}</span>
+        </div>
+        <div class="hero-actions" style="margin-top:16px;">
+          <button class="primary-btn" data-open-topic="${next.id}">Open next topic</button>
+          <button class="ghost-btn" data-page-jump="planner">Adjust study plan</button>
+        </div>
+      `;
+    }
+
+    function renderRoadmap() {
+      const container = qs('#roadmapList');
+      container.innerHTML = CHAPTERS.map(ch => {
+        const topics = ch.topicIds.map(getTopic).filter(Boolean);
+        const doneCount = topics.filter(t => isDone(t.id)).length;
+        const pct = Math.round((doneCount / topics.length) * 100) || 0;
+        return `
+          <article class="roadmap-card">
+            <button class="roadmap-head" data-toggle-chapter="${ch.id}">
+              <div>
+                <div class="small-meta"><span class="tag">Chapter ${ch.id}</span><span class="tag">${topics.length} topics</span></div>
+                <h4>${escapeHtml(ch.title)}</h4>
+                <p>${escapeHtml(ch.summary)}</p>
+                <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+              </div>
+              <span class="badge">${pct}%</span>
+            </button>
+            <div class="roadmap-body">
+              <div class="chapter-topic-list">
+                ${topics.map(t => `
+                  <button class="chip" data-open-topic="${t.id}">
+                    ${isDone(t.id) ? '✓ ' : ''}${escapeHtml(t.title)}
+                  </button>`).join('')}
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function getFilteredTopics() {
+      return TOPICS.filter(t => {
+        const categoryOk = currentCategory === 'all' ? true : t.category === currentCategory;
+        const levelOk = currentLevel === 'all' ? true : t.level === currentLevel;
+        const bookmarkOk = bookmarkedOnly ? isBookmarked(t.id) : true;
+        const incompleteOk = incompleteOnly ? !isDone(t.id) : true;
+        return categoryOk && levelOk && bookmarkOk && incompleteOk;
+      });
+    }
+
+    function renderTopics() {
+      const data = getFilteredTopics();
+      qs('#topicCountLabel').textContent = `${data.length} visible topics`;
+      const grid = qs('#topicGrid');
+      if (!data.length) {
+        grid.innerHTML = `<div class="empty" style="grid-column:1/-1;">No topics match the current filters.</div>`;
+        return;
+      }
+      grid.innerHTML = data.map(t => `
+        <article class="card topic-card">
+          <div class="card-top">
+            <div>
+              <div class="pill ${t.category}">${escapeHtml(t.category)}</div>
+              <h4>${escapeHtml(t.title)}</h4>
+              <p>${escapeHtml(t.desc)}</p>
+            </div>
+            <button class="icon-btn ${isBookmarked(t.id) ? 'active' : ''}" data-bookmark-topic="${t.id}" aria-label="Bookmark topic">
+              ${isBookmarked(t.id) ? '★' : '☆'}
+            </button>
+          </div>
+          <div class="small-meta">
+            <span class="tag">${t.level}</span>
+            <span class="tag">${t.time} min</span>
+            <span class="tag">Chapter ${t.chapterId}</span>
+            ${isDone(t.id) ? '<span class="tag">Completed</span>' : ''}
+            ${quizPassed(t.id) ? '<span class="tag">Quiz passed</span>' : ''}
+            ${hasNotes(t.id) ? '<span class="tag">Notes saved</span>' : ''}
+          </div>
+          <div class="actions">
+            <button class="primary-btn" data-open-topic="${t.id}">Open lesson</button>
+            <button class="mini-btn ${isDone(t.id) ? 'active' : ''}" data-toggle-done="${t.id}">
+              ${isDone(t.id) ? '✓ Completed' : 'Mark done'}
+            </button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function renderResources() {
+      const tabs = Object.keys(RESOURCES);
+      qs('#resourceTabs').innerHTML = tabs.map(tab => `
+        <button class="mini-btn ${currentResourceTab === tab ? 'active' : ''}" data-resource-tab="${tab}">
+          ${tab.charAt(0).toUpperCase() + tab.slice(1)}
+        </button>
+      `).join('');
+      const items = RESOURCES[currentResourceTab] || [];
+      qs('#resourceGrid').innerHTML = items.map(item => `
+        <article class="card resource-card">
+          <div class="tag-row">${item.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div>
+          <h4>${escapeHtml(item.title)}</h4>
+          <p>${escapeHtml(item.desc)}</p>
+          <div class="actions" style="margin-top:auto;">
+            <a class="primary-btn" href="${item.url}" target="_blank" rel="noopener noreferrer">Open resource</a>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function renderProjects() {
+      qs('#projectGrid').innerHTML = PROJECTS.map(project => `
+        <article class="card project-card">
+          <div class="tag-row">
+            <span class="tag">${escapeHtml(project.level)}</span>
+            <span class="tag">${escapeHtml(project.time)}</span>
+          </div>
+          <h4>${escapeHtml(project.title)}</h4>
+          <p>${escapeHtml(project.goal)}</p>
+          <ul class="project-list">
+            ${project.deliverables.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+          </ul>
+        </article>
+      `).join('');
+    }
+
+    function renderGlossary() {
+      qs('#glossaryGrid').innerHTML = GLOSSARY.map(item => `
+        <article class="card glossary-card">
+          <h4>${escapeHtml(item.term)}</h4>
+          <p>${escapeHtml(item.def)}</p>
+        </article>
+      `).join('');
+    }
+
+    function renderPlanner() {
+      qs('#dailyMinutes').value = state.dailyMinutes;
+      qs('#dailyMinutesValue').textContent = `${state.dailyMinutes} min/day`;
+      const minutesLeft = TOPICS.filter(t => !isDone(t.id)).reduce((sum, t) => sum + t.time, 0);
+      const topicsLeft = TOPICS.filter(t => !isDone(t.id)).length;
+      const daysLeft = Math.max(1, Math.ceil(minutesLeft / state.dailyMinutes));
+      qs('#plannerTopicsLeft').textContent = topicsLeft;
+      qs('#plannerHoursLeft').textContent = (minutesLeft / 60).toFixed(1);
+      qs('#plannerDaysLeft').textContent = daysLeft;
+      const plan = TOPICS.filter(t => !isDone(t.id)).slice(0, 5);
+      qs('#studyPlan').innerHTML = plan.length ? plan.map((t, index) => `
+        <div class="plan-item">
+          <strong>Day ${index + 1} · ${escapeHtml(t.title)}</strong>
+          <div class="small-meta"><span class="tag">${t.time} min</span><span class="tag">${t.level}</span></div>
+        </div>
+      `).join('') : `<div class="empty">Everything is completed. Add more topics or start a capstone project.</div>`;
+      qs('#plannerRecommendation').innerHTML = plan.length ? plan.map(t => `
+        <div class="plan-item">
+          <strong>${escapeHtml(t.title)}</strong>
+          <div class="muted">${escapeHtml(t.desc)}</div>
+        </div>
+      `).join('') : `<div class="empty">You have completed the full roadmap.</div>`;
+    }
+
+    function openTopic(id, setHash = true) {
+      const topic = getTopic(id);
+      if (!topic) return;
+      currentTopicId = topic.id;
+      qs('#topicModalPill').innerHTML = `<span class="pill ${topic.category}">${escapeHtml(topic.category)}</span>`;
+      qs('#topicModalTitle').textContent = topic.title;
+      qs('#topicModalDesc').textContent = topic.desc;
+      qs('#topicModalMeta').innerHTML = `
+        <span class="tag">${topic.level}</span>
+        <span class="tag">${topic.time} min</span>
+        <span class="tag">Chapter ${topic.chapterId}</span>
+      `;
+      qs('#conceptList').innerHTML = topic.concepts.map(item => `<li>${escapeHtml(item)}</li>`).join('');
+      qs('#codeLangLabel').textContent = topic.codeLang;
+      qs('#topicCode').textContent = topic.code;
+      renderQuiz(topic);
+      qs('#topicNotes').value = state.notes[topic.id] || '';
+      qs('#topicResourceGrid').innerHTML = topic.resources.map(r => `
+        <article class="card resource-card">
+          <div class="tag-row"><span class="tag">${escapeHtml(r.tag)}</span></div>
+          <h4>${escapeHtml(r.label)}</h4>
+          <div class="actions" style="margin-top:auto;">
+            <a class="primary-btn" href="${r.url}" target="_blank" rel="noopener noreferrer">Open link</a>
+          </div>
+        </article>
+      `).join('');
+      qs('#bookmarkTopicBtn').textContent = isBookmarked(topic.id) ? '★ Bookmarked' : '⭐ Bookmark';
+      qs('#bookmarkTopicBtn').classList.toggle('active', isBookmarked(topic.id));
+      qs('#completeTopicBtn').textContent = isDone(topic.id) ? '✓ Completed' : '✓ Mark complete';
+      qs('#checkComplete').textContent = isDone(topic.id) ? 'Yes' : 'No';
+      qs('#checkBookmark').textContent = isBookmarked(topic.id) ? 'Yes' : 'No';
+      qs('#checkQuiz').textContent = quizPassed(topic.id) ? 'Yes' : 'No';
+      qs('#checkNotes').textContent = hasNotes(topic.id) ? 'Yes' : 'No';
+      qs('#topicWhy').textContent = buildWhyThisMatters(topic);
+      const next = TOPICS.find(t => t.chapterId >= topic.chapterId && t.id > topic.id && !isDone(t.id)) || getNextIncompleteTopic();
+      qs('#nextTopicHint').textContent = next && next.id !== topic.id ? `Next recommended lesson: ${next.title}` : 'You are on the best next lesson right now.';
+      switchTab('overview');
+      qs('#topicDrawer').classList.add('open');
+      qs('#topicDrawer').setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      if (setHash) history.replaceState(null, '', `#topic-${topic.id}`);
+    }
+
+    function buildWhyThisMatters(topic) {
+      const map = {
+        foundation: 'This gives you the mental model that keeps later Shopify work from feeling fragmented.',
+        liquid: 'Liquid is the language that turns store data into storefront HTML.',
+        theme: 'Theme architecture is what separates quick hacks from scalable storefront builds.',
+        data: 'Good data modeling makes content flexible and reduces fragile theme logic.',
+        frontend: 'These patterns shape storefront quality, usability, and performance.',
+        api: 'API fluency is the bridge from storefront work to automation and app development.',
+        apps: 'This knowledge is what turns you into a real Shopify app developer.',
+        advanced: 'These topics are where advanced merchants and higher-value projects live.',
+        pro: 'Professional workflow skills are what make clients trust your delivery.'
+      };
+      return map[topic.category] || 'This topic supports stronger Shopify implementation skills.';
+    }
+
+    function closeTopic() {
+      qs('#topicDrawer').classList.remove('open');
+      qs('#topicDrawer').setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (location.hash.startsWith('#topic-')) history.replaceState(null, '', `#page-${currentPage}`);
+    }
+
+    function switchTab(name) {
+      qsa('.tab-btn', qs('#modalTabs')).forEach(btn => btn.classList.toggle('active', btn.dataset.tab === name));
+      qsa('.pane').forEach(pane => pane.classList.toggle('active', pane.id === `pane-${name}`));
+    }
+
+    function renderQuiz(topic) {
+      qs('#quizQuestion').textContent = topic.quiz.question;
+      qs('#quizOptions').innerHTML = topic.quiz.options.map((opt, index) => `
+        <label class="quiz-option">
+          <input type="radio" name="quizOption" value="${index}">
+          <span>${escapeHtml(opt)}</span>
+        </label>
+      `).join('');
+      const result = qs('#quizResult');
+      result.className = 'quiz-result';
+      result.textContent = quizPassed(topic.id) ? 'Previously passed. You can still retake it anytime.' : '';
+      if (quizPassed(topic.id)) result.classList.add('good');
+    }
+
+    function checkCurrentQuiz() {
+      const topic = getTopic(currentTopicId);
+      if (!topic) return;
+      const picked = qs('input[name="quizOption"]:checked');
+      const result = qs('#quizResult');
+      if (!picked) {
+        result.className = 'quiz-result bad';
+        result.textContent = 'Pick one option before checking your answer.';
+        return;
+      }
+      const isCorrect = Number(picked.value) === topic.quiz.answer;
+      if (isCorrect) {
+        state.quizPassed[topic.id] = true;
+        saveState();
+        result.className = 'quiz-result good';
+        result.textContent = `Correct. ${topic.quiz.explanation}`;
+      } else {
+        result.className = 'quiz-result bad';
+        result.textContent = `Not quite. ${topic.quiz.explanation}`;
+      }
+      qs('#checkQuiz').textContent = quizPassed(topic.id) ? 'Yes' : 'No';
+      renderTopics();
+    }
+
+    function resetCurrentQuiz() {
+      qsa('input[name="quizOption"]').forEach(el => el.checked = false);
+      const result = qs('#quizResult');
+      result.className = 'quiz-result';
+      result.textContent = '';
+    }
+
+    function setPage(page) {
+      currentPage = page;
+      qsa('.page').forEach(p => p.classList.toggle('active', p.id === `page-${page}`));
+      qsa('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.page === page));
+      history.replaceState(null, '', `#page-${page}`);
+      if (window.innerWidth <= 920) closeSidebar();
+      if (page === 'topics') renderTopics();
+      if (page === 'roadmap') renderRoadmap();
+      if (page === 'resources') renderResources();
+    }
+
+    function setCategory(category) {
+      currentCategory = category;
+      qsa('.filter-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.category === category));
+      setPage('topics');
+      renderTopics();
+    }
+
+    function setLevel(level) {
+      currentLevel = level;
+      qsa('#topicFilterBar [data-level]').forEach(btn => btn.classList.toggle('active', btn.dataset.level === level));
+      renderTopics();
+    }
+
+    function toggleDone(id) {
+      if (isDone(id)) delete state.done[id];
+      else state.done[id] = true;
+      saveState();
+      renderTopics();
+      if (currentTopicId === Number(id)) openTopic(id, false);
+    }
+
+    function toggleBookmark(id) {
+      if (isBookmarked(id)) delete state.bookmarked[id];
+      else state.bookmarked[id] = true;
+      saveState();
+      renderTopics();
+      if (currentTopicId === Number(id)) openTopic(id, false);
+    }
+
+    function saveCurrentNotes() {
+      if (!currentTopicId) return;
+      state.notes[currentTopicId] = qs('#topicNotes').value;
+      saveState();
+      qs('#checkNotes').textContent = hasNotes(currentTopicId) ? 'Yes' : 'No';
+      renderTopics();
+    }
+
+    function renderSearchResults(query) {
+      const panel = qs('#searchPanel');
+      const value = query.trim().toLowerCase();
+      if (value.length < 2) {
+        panel.classList.remove('open');
+        panel.innerHTML = '';
+        return;
+      }
+      const topicMatches = TOPICS.filter(t =>
+        [t.title, t.desc, t.category, t.level, ...t.concepts].join(' ').toLowerCase().includes(value)
+      ).slice(0, 6);
+
+      const resourceMatches = Object.entries(RESOURCES).flatMap(([group, items]) =>
+        items.filter(item => (item.title + ' ' + item.desc + ' ' + item.tags.join(' ')).toLowerCase().includes(value))
+          .map(item => ({...item, group}))
+      ).slice(0, 5);
+
+      const glossaryMatches = GLOSSARY.filter(item =>
+        (item.term + ' ' + item.def).toLowerCase().includes(value)
+      ).slice(0, 5);
+
+      if (!topicMatches.length && !resourceMatches.length && !glossaryMatches.length) {
+        panel.classList.add('open');
+        panel.innerHTML = `<div class="search-group"><h4>Results</h4><button class="search-item" type="button">No matches found.</button></div>`;
+        return;
+      }
+
+      panel.classList.add('open');
+      panel.innerHTML = `
+        ${topicMatches.length ? `
+          <div class="search-group">
+            <h4>Topics</h4>
+            ${topicMatches.map(item => `
+              <button class="search-item" data-open-topic="${item.id}">
+                <span class="nav-icon">📚</span>
+                <span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.desc)}</small></span>
+              </button>
+            `).join('')}
+          </div>` : ''}
+        ${resourceMatches.length ? `
+          <div class="search-group">
+            <h4>Resources</h4>
+            ${resourceMatches.map(item => `
+              <a class="search-item" href="${item.url}" target="_blank" rel="noopener noreferrer">
+                <span class="nav-icon">🎯</span>
+                <span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.group)} · ${escapeHtml(item.desc)}</small></span>
+              </a>
+            `).join('')}
+          </div>` : ''}
+        ${glossaryMatches.length ? `
+          <div class="search-group" style="padding-bottom:10px;">
+            <h4>Glossary</h4>
+            ${glossaryMatches.map(item => `
+              <button class="search-item" data-go-glossary="1">
+                <span class="nav-icon">📘</span>
+                <span><strong>${escapeHtml(item.term)}</strong><small>${escapeHtml(item.def)}</small></span>
+              </button>
+            `).join('')}
+          </div>` : ''}
+      `;
+    }
+
+    function exportState() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'shopify-mastery-progress.json';
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importStateFromFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(reader.result);
+          Object.assign(state, {
+            theme: parsed.theme || state.theme,
+            done: parsed.done || {},
+            bookmarked: parsed.bookmarked || {},
+            notes: parsed.notes || {},
+            quizPassed: parsed.quizPassed || {},
+            dailyMinutes: parsed.dailyMinutes || 45,
+            lastActiveDate: parsed.lastActiveDate || todayISO(),
+            streak: parsed.streak || 1
+          });
+          applyTheme();
+          saveState();
+          renderTopics();
+          renderResources();
+          renderGlossary();
+          renderProjects();
+          renderPlanner();
+          alert('Progress imported successfully.');
+        } catch {
+          alert('Invalid JSON file.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function applyTheme() {
+      document.documentElement.setAttribute('data-theme', state.theme || 'dark');
+      qs('#themeBtn').textContent = state.theme === 'light' ? '☀️' : '🌙';
+    }
+
+    function toggleTheme() {
+      state.theme = state.theme === 'light' ? 'dark' : 'light';
+      applyTheme();
+      saveState();
+    }
+
+    function openSidebar() {
+      qs('#sidebar').classList.add('open');
+      qs('#mobileOverlay').classList.add('open');
+    }
+
+    function closeSidebar() {
+      qs('#sidebar').classList.remove('open');
+      qs('#mobileOverlay').classList.remove('open');
+    }
+
+    function bootHash() {
+      const hash = location.hash || '';
+      if (hash.startsWith('#topic-')) {
+        const id = Number(hash.replace('#topic-', ''));
+        if (getTopic(id)) {
+          setPage('topics');
+          openTopic(id, false);
+          return;
+        }
+      }
+      if (hash.startsWith('#page-')) {
+        const page = hash.replace('#page-', '');
+        if (qs(`#page-${page}`)) {
+          setPage(page);
+          return;
+        }
+      }
+      setPage('overview');
+    }
+
+    document.addEventListener('click', event => {
+      const nav = event.target.closest('[data-page]');
+      if (nav) {
+        setPage(nav.dataset.page);
+        return;
+      }
+      const pageJump = event.target.closest('[data-page-jump]');
+      if (pageJump) {
+        setPage(pageJump.dataset.pageJump);
+        return;
+      }
+      const category = event.target.closest('[data-category]');
+      if (category) {
+        setCategory(category.dataset.category);
+        return;
+      }
+      const level = event.target.closest('[data-level]');
+      if (level) {
+        setLevel(level.dataset.level);
+        return;
+      }
+      const openTopicBtn = event.target.closest('[data-open-topic]');
+      if (openTopicBtn) {
+        setPage('topics');
+        openTopic(openTopicBtn.dataset.openTopic);
+        qs('#searchPanel').classList.remove('open');
+        return;
+      }
+      const doneBtn = event.target.closest('[data-toggle-done]');
+      if (doneBtn) {
+        toggleDone(doneBtn.dataset.toggleDone);
+        return;
+      }
+      const bookmarkBtn = event.target.closest('[data-bookmark-topic]');
+      if (bookmarkBtn) {
+        toggleBookmark(bookmarkBtn.dataset.bookmarkTopic);
+        return;
+      }
+      const resourceTab = event.target.closest('[data-resource-tab]');
+      if (resourceTab) {
+        currentResourceTab = resourceTab.dataset.resourceTab;
+        renderResources();
+        return;
+      }
+      const chapterBtn = event.target.closest('[data-toggle-chapter]');
+      if (chapterBtn) {
+        chapterBtn.closest('.roadmap-card').classList.toggle('open');
+        return;
+      }
+      const tabBtn = event.target.closest('[data-tab]');
+      if (tabBtn) {
+        switchTab(tabBtn.dataset.tab);
+        return;
+      }
+      const glossaryGo = event.target.closest('[data-go-glossary]');
+      if (glossaryGo) {
+        setPage('glossary');
+        qs('#searchPanel').classList.remove('open');
+        return;
+      }
+      if (!event.target.closest('.search-wrap')) {
+        qs('#searchPanel').classList.remove('open');
+      }
+    });
+
+    qs('#bookmarkTopicBtn').addEventListener('click', () => currentTopicId && toggleBookmark(currentTopicId));
+    qs('#completeTopicBtn').addEventListener('click', () => currentTopicId && toggleDone(currentTopicId));
+    qs('#closeTopicBtn').addEventListener('click', closeTopic);
+    qs('#topicDrawer').addEventListener('click', (event) => {
+      if (event.target.id === 'topicDrawer') closeTopic();
+    });
+    qs('#copyCodeBtn').addEventListener('click', async () => {
+      const topic = getTopic(currentTopicId);
+      if (!topic) return;
+      await navigator.clipboard.writeText(topic.code);
+      qs('#copyCodeBtn').textContent = 'Copied';
+      setTimeout(() => qs('#copyCodeBtn').textContent = 'Copy code', 1000);
+    });
+    qs('#checkQuizBtn').addEventListener('click', checkCurrentQuiz);
+    qs('#resetQuizBtn').addEventListener('click', resetCurrentQuiz);
+    qs('#topicNotes').addEventListener('input', saveCurrentNotes);
+    qs('#bookmarkedOnlyBtn').addEventListener('click', () => {
+      bookmarkedOnly = !bookmarkedOnly;
+      qs('#bookmarkedOnlyBtn').classList.toggle('active', bookmarkedOnly);
+      renderTopics();
+    });
+    qs('#incompleteOnlyBtn').addEventListener('click', () => {
+      incompleteOnly = !incompleteOnly;
+      qs('#incompleteOnlyBtn').classList.toggle('active', incompleteOnly);
+      renderTopics();
+    });
+    qs('#globalSearch').addEventListener('input', e => renderSearchResults(e.target.value));
+    qs('#exportBtn').addEventListener('click', exportState);
+    qs('#importInput').addEventListener('change', e => importStateFromFile(e.target.files[0]));
+    qs('#themeBtn').addEventListener('click', toggleTheme);
+    qs('#mobileMenuBtn').addEventListener('click', openSidebar);
+    qs('#mobileOverlay').addEventListener('click', closeSidebar);
+    qs('#dailyMinutes').addEventListener('input', e => {
+      state.dailyMinutes = Number(e.target.value);
+      saveState();
+      renderPlanner();
+    });
+
+    window.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        closeTopic();
+        qs('#searchPanel').classList.remove('open');
+        closeSidebar();
+      }
+    });
+
+    renderTopics();
+    renderResources();
+    renderProjects();
+    renderGlossary();
+    updateStreak();
+    applyTheme();
+    renderAllStats();
+    bootHash();
+  </script>
+</body>
+</html>
