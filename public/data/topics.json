@@ -1,0 +1,2112 @@
+[
+  {
+    "id": 1,
+    "slug": "liquid-basics",
+    "title": "Liquid Basics",
+    "category": "liquid",
+    "level": "Beginner",
+    "chapterId": 1,
+    "minutes": 20,
+    "summary": "Learn what Liquid is, where it runs, and how output tags, logic tags, loops, and conditionals work in real storefront templates.",
+    "concepts": [
+      "Liquid renders on the server before the browser runs JavaScript.",
+      "Use {{ }} to output values and {% %} for logic, assignment, loops, and control flow.",
+      "The most common starter patterns are if/unless, for loops, assign, capture, and case.",
+      "Real theme work mixes Liquid with HTML, CSS, and JavaScript instead of replacing them."
+    ],
+    "codeLang": "liquid",
+    "code": "{% assign featured = collection.products | first %}\n<h1>{{ product.title }}</h1>\n{% if product.available %}\n  <p>In stock</p>\n{% else %}\n  <p>Sold out</p>\n{% endif %}\n\n<ul>\n  {% for image in product.images %}\n    <li>{{ image.alt | escape }}</li>\n  {% endfor %}\n</ul>",
+    "quiz": [
+      {
+        "question": "Where does Liquid execute?",
+        "options": [
+          "In the browser after hydration",
+          "On Shopify's server before HTML is sent",
+          "Inside CSS only",
+          "Only inside apps"
+        ],
+        "answer": 1,
+        "explanation": "Liquid is a server-side templating language."
+      },
+      {
+        "question": "Which syntax outputs a value?",
+        "options": [
+          "{% if %}",
+          "{{ product.title }}",
+          "{% assign %}",
+          "{% schema %}"
+        ],
+        "answer": 1,
+        "explanation": "Double curly braces output values."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Liquid reference",
+        "url": "https://shopify.dev/docs/api/liquid",
+        "tag": "Official"
+      },
+      {
+        "label": "Liquid objects",
+        "url": "https://shopify.dev/docs/api/liquid/objects",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Getting started with Shopify Liquid",
+        "description": "Solid beginner explanation of core Liquid ideas.",
+        "embedUrl": "https://www.youtube.com/embed/QTtXmARDG-Y",
+        "watchUrl": "https://www.youtube.com/watch?v=QTtXmARDG-Y"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Shopify Theme Development - Liquid Full Tutorial",
+        "description": "Longer coding walkthrough that shows Liquid inside a real theme.",
+        "embedUrl": "https://www.youtube.com/embed/Oc9zCbsN5Q4",
+        "watchUrl": "https://www.youtube.com/watch?v=Oc9zCbsN5Q4"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "slug": "liquid-objects-filters-loops-conditionals",
+    "title": "Objects, Filters, Loops, and Conditionals",
+    "category": "liquid",
+    "level": "Beginner",
+    "chapterId": 1,
+    "minutes": 24,
+    "summary": "Use product, collection, cart, customer, and shop data with filters, for loops, and conditional logic.",
+    "concepts": [
+      "Objects expose store data such as product, collection, cart, customer, request, section, and settings.",
+      "Filters transform values for money, images, dates, text, arrays, and HTML safety.",
+      "Loops are useful for rendering product media, tags, recommendations, menu items, or cart lines.",
+      "Conditionals protect your theme against missing data and control storefront states."
+    ],
+    "codeLang": "liquid",
+    "code": "{{ product.price | money }}\n{{ product.featured_image | image_url: width: 900 }}\n\n{% if customer %}\n  <p>Welcome back, {{ customer.first_name | escape }}</p>\n{% endif %}\n\n{% for tag in product.tags %}\n  <span class=\"tag\">{{ tag }}</span>\n{% endfor %}",
+    "quiz": [
+      {
+        "question": "What does a Liquid filter do?",
+        "options": [
+          "Creates a webhook",
+          "Transforms a value before output",
+          "Authenticates an app",
+          "Defines schema settings"
+        ],
+        "answer": 1,
+        "explanation": "Filters modify values before they are printed."
+      },
+      {
+        "question": "Which object is best for storefront cart totals?",
+        "options": [
+          "shop",
+          "cart",
+          "localization",
+          "blog"
+        ],
+        "answer": 1,
+        "explanation": "The cart object exposes totals, lines, note, and attributes."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Liquid filters",
+        "url": "https://shopify.dev/docs/api/liquid/filters",
+        "tag": "Official"
+      },
+      {
+        "label": "Liquid objects list",
+        "url": "https://shopify.dev/docs/api/liquid/objects",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Getting started with Shopify Liquid",
+        "description": "Concept-first walkthrough of how Liquid pieces fit together.",
+        "embedUrl": "https://www.youtube.com/embed/QTtXmARDG-Y",
+        "watchUrl": "https://www.youtube.com/watch?v=QTtXmARDG-Y"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Shopify Theme Development - Liquid Full Tutorial",
+        "description": "Practical theme coding examples for data output and loops.",
+        "embedUrl": "https://www.youtube.com/embed/Oc9zCbsN5Q4",
+        "watchUrl": "https://www.youtube.com/watch?v=Oc9zCbsN5Q4"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "slug": "render-vs-include",
+    "title": "render vs include",
+    "category": "liquid",
+    "level": "Intermediate",
+    "chapterId": 1,
+    "minutes": 18,
+    "summary": "Understand why render is the modern pattern, how scope works, and how to migrate old themes away from include.",
+    "concepts": [
+      "render is the modern snippet API and isolates scope more safely than include.",
+      "include is deprecated in modern Shopify theme practice and appears mostly in older themes.",
+      "Explicitly pass variables to render to make snippet contracts clearer and easier to debug.",
+      "Migration usually means replacing implicit scope assumptions with named parameters."
+    ],
+    "codeLang": "liquid",
+    "code": "{% render 'price-badge', product: product, showCompare: true %}\n\n{%- comment -%}\nLegacy pattern to avoid in new work:\n{% include 'price-badge' %}\n{%- endcomment -%}\n\n{# snippets/price-badge.liquid #}\n{% if product.compare_at_price > product.price and showCompare %}\n  <span class=\"badge\">Sale</span>\n{% endif %}",
+    "quiz": [
+      {
+        "question": "Why is render preferred over include?",
+        "options": [
+          "It runs only in apps",
+          "It provides clearer scope and is the supported modern pattern",
+          "It disables snippets",
+          "It is required for JSON templates only"
+        ],
+        "answer": 1,
+        "explanation": "render gives safer, clearer variable scope."
+      },
+      {
+        "question": "What is the best migration habit when replacing include?",
+        "options": [
+          "Depend on global variables more",
+          "Pass only the data the snippet needs",
+          "Remove all snippets",
+          "Convert snippets to CSS"
+        ],
+        "answer": 1,
+        "explanation": "Explicit parameters make snippets easier to maintain."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Liquid tags reference",
+        "url": "https://shopify.dev/docs/api/liquid/tags",
+        "tag": "Official"
+      },
+      {
+        "label": "Theme architecture",
+        "url": "https://shopify.dev/docs/storefronts/themes/architecture",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Getting started with Shopify Liquid",
+        "description": "Useful theory base before discussing snippet scope.",
+        "embedUrl": "https://www.youtube.com/embed/QTtXmARDG-Y",
+        "watchUrl": "https://www.youtube.com/watch?v=QTtXmARDG-Y"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Shopify Theme Development - Liquid Full Tutorial",
+        "description": "Practical theme workflow where snippet rendering patterns show up.",
+        "embedUrl": "https://www.youtube.com/embed/Oc9zCbsN5Q4",
+        "watchUrl": "https://www.youtube.com/watch?v=Oc9zCbsN5Q4"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "slug": "template-types-and-real-data",
+    "title": "Template Types and Real Shopify Data",
+    "category": "liquid",
+    "level": "Intermediate",
+    "chapterId": 2,
+    "minutes": 24,
+    "summary": "Work across product, collection, page, cart, article, blog, search, and customer templates with the right context objects.",
+    "concepts": [
+      "Each template type has its own object context and expected UX responsibilities.",
+      "product templates care about media, variants, price, inventory, and merchandising blocks.",
+      "collection and search templates focus on pagination, filters, sorting, and card rendering.",
+      "cart, article, blog, and customer templates introduce very different data shapes and empty states."
+    ],
+    "codeLang": "liquid",
+    "code": "{% if template.name == 'product' %}\n  <script type=\"application/ld+json\">{{ product | structured_data }}</script>\n{% endif %}\n\n{% if template.name == 'cart' and cart.item_count == 0 %}\n  <p>Your cart is empty.</p>\n{% endif %}\n\n{% paginate collection.products by 24 %}\n  {% for item in collection.products %}\n    {% render 'product-card', product: item %}\n  {% endfor %}\n{% endpaginate %}",
+    "quiz": [
+      {
+        "question": "Which object is central in a product template?",
+        "options": [
+          "blog",
+          "product",
+          "article",
+          "policy"
+        ],
+        "answer": 1,
+        "explanation": "The product object drives product template rendering."
+      },
+      {
+        "question": "Why does template context matter?",
+        "options": [
+          "Because every page type exposes the same data",
+          "Because page types expose different data and UX concerns",
+          "Because Liquid stops working otherwise",
+          "Because it changes CSS syntax"
+        ],
+        "answer": 1,
+        "explanation": "Different template types require different objects and edge-case handling."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Templates",
+        "url": "https://shopify.dev/docs/storefronts/themes/architecture/templates",
+        "tag": "Official"
+      },
+      {
+        "label": "JSON templates",
+        "url": "https://shopify.dev/docs/storefronts/themes/architecture/templates/json-templates",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Shopify Theme Development - Liquid Theme Architecture",
+        "description": "Theme architecture context for understanding template types.",
+        "embedUrl": "https://www.youtube.com/embed/pYWxm3SUhts",
+        "watchUrl": "https://www.youtube.com/watch?v=pYWxm3SUhts"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "How To Code Your Own Shopify Theme",
+        "description": "A real theme build where templates and store data come together.",
+        "embedUrl": "https://www.youtube.com/embed/QNyTHA8w3eo",
+        "watchUrl": "https://www.youtube.com/watch?v=QNyTHA8w3eo"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "slug": "sections-from-scratch",
+    "title": "Creating Sections from Scratch",
+    "category": "sections",
+    "level": "Beginner",
+    "chapterId": 3,
+    "minutes": 26,
+    "summary": "Build reusable theme sections from zero and learn how sections connect templates, schema, and merchant editing.",
+    "concepts": [
+      "Sections are merchant-editable modules rendered by templates or JSON templates.",
+      "A section file mixes HTML, Liquid, CSS classes, and a schema block.",
+      "Good sections have strong defaults, clear setting labels, and resilient empty states.",
+      "A section should have one clear purpose so merchants understand how to configure it."
+    ],
+    "codeLang": "liquid",
+    "code": "<section class=\"hero\">\n  <h2>{{ section.settings.heading }}</h2>\n  <p>{{ section.settings.copy }}</p>\n</section>\n\n{% schema %}\n{\n  \"name\": \"Hero Banner\",\n  \"settings\": [\n    { \"type\": \"text\", \"id\": \"heading\", \"label\": \"Heading\" },\n    { \"type\": \"textarea\", \"id\": \"copy\", \"label\": \"Copy\" }\n  ],\n  \"presets\": [{ \"name\": \"Hero Banner\" }]\n}\n{% endschema %}",
+    "quiz": [
+      {
+        "question": "What makes a section editable in the theme editor?",
+        "options": [
+          "Webhooks",
+          "Schema",
+          "Theme Check",
+          "A CSS file"
+        ],
+        "answer": 1,
+        "explanation": "Schema defines merchant-editable settings and editor metadata."
+      },
+      {
+        "question": "What is a good section design habit?",
+        "options": [
+          "Give it three unrelated jobs",
+          "Keep it focused and resilient",
+          "Depend on hardcoded product IDs",
+          "Skip default states"
+        ],
+        "answer": 1,
+        "explanation": "Focused sections are easier to use and maintain."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Sections architecture",
+        "url": "https://shopify.dev/docs/storefronts/themes/architecture/sections",
+        "tag": "Official"
+      },
+      {
+        "label": "Section schema",
+        "url": "https://shopify.dev/docs/storefronts/themes/architecture/sections/section-schema",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Learn Shopify Sections & Schema with Examples",
+        "description": "Clear introduction to sections and schema fundamentals.",
+        "embedUrl": "https://www.youtube.com/embed/atdMYeqCoqY",
+        "watchUrl": "https://www.youtube.com/watch?v=atdMYeqCoqY"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Shopify Theme Development - Sections Tutorial",
+        "description": "Hands-on theme section build from a developer perspective.",
+        "embedUrl": "https://www.youtube.com/embed/3n5sWA2ow1Q",
+        "watchUrl": "https://www.youtube.com/watch?v=3n5sWA2ow1Q"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "slug": "blocks-and-dynamic-layouts",
+    "title": "Blocks and Dynamic Layouts",
+    "category": "sections",
+    "level": "Intermediate",
+    "chapterId": 3,
+    "minutes": 22,
+    "summary": "Use blocks to let merchants reorder, duplicate, and control content layouts inside sections.",
+    "concepts": [
+      "Blocks let merchants add repeated content units inside a section.",
+      "Block types are ideal for headings, icons, CTAs, media cards, testimonials, or FAQ rows.",
+      "Your Liquid should switch block rendering by block.type and use block.shopify_attributes in editor-aware markup.",
+      "Good blocks balance flexibility with constraints so designs do not break."
+    ],
+    "codeLang": "liquid",
+    "code": "{% for block in section.blocks %}\n  <div {{ block.shopify_attributes }}>\n    {% case block.type %}\n      {% when 'faq' %}\n        <details><summary>{{ block.settings.question }}</summary><p>{{ block.settings.answer }}</p></details>\n      {% when 'cta' %}\n        <a href=\"{{ block.settings.link }}\">{{ block.settings.label }}</a>\n    {% endcase %}\n  </div>\n{% endfor %}",
+    "quiz": [
+      {
+        "question": "Why are blocks useful?",
+        "options": [
+          "They replace Liquid entirely",
+          "They allow merchant-controlled repeated layouts inside a section",
+          "They only work in apps",
+          "They create webhooks"
+        ],
+        "answer": 1,
+        "explanation": "Blocks make sections modular and reorderable."
+      },
+      {
+        "question": "What helps theme editor usability inside loops?",
+        "options": [
+          "block.shopify_attributes",
+          "alert()",
+          "localStorage only",
+          "window.print()"
+        ],
+        "answer": 0,
+        "explanation": "block.shopify_attributes improves editor behavior and targeting."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Blocks",
+        "url": "https://shopify.dev/docs/storefronts/themes/architecture/sections/section-schema#blocks",
+        "tag": "Official"
+      },
+      {
+        "label": "Theme editor integration",
+        "url": "https://shopify.dev/docs/storefronts/themes/best-practices/editor/integrate-sections-and-blocks",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Learn Shopify Sections & Schema with Examples",
+        "description": "Explains the theory behind configurable section layouts.",
+        "embedUrl": "https://www.youtube.com/embed/atdMYeqCoqY",
+        "watchUrl": "https://www.youtube.com/watch?v=atdMYeqCoqY"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "How to Build Shopify Theme Sections from Scratch",
+        "description": "A practical block-based section implementation walkthrough.",
+        "embedUrl": "https://www.youtube.com/embed/9qHKqNHoca4",
+        "watchUrl": "https://www.youtube.com/watch?v=9qHKqNHoca4"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "slug": "setting-types",
+    "title": "All Section Setting Types",
+    "category": "sections",
+    "level": "Intermediate",
+    "chapterId": 3,
+    "minutes": 24,
+    "summary": "Work with text, image, richtext, url, range, checkbox, select, radio, color, product, collection, and list settings.",
+    "concepts": [
+      "The right setting type reduces merchant confusion and avoids brittle content entry.",
+      "Use text and textarea for simple copy, richtext for formatted content, and url for link targets.",
+      "Range, select, checkbox, radio, and color give safe UI constraints for design controls.",
+      "Resource settings like product, collection, page, article, blog, and image_picker connect theme UI to real Shopify data."
+    ],
+    "codeLang": "json",
+    "code": "[\n  { \"type\": \"text\", \"id\": \"heading\", \"label\": \"Heading\" },\n  { \"type\": \"image_picker\", \"id\": \"image\", \"label\": \"Image\" },\n  { \"type\": \"range\", \"id\": \"columns\", \"min\": 2, \"max\": 6, \"step\": 1, \"default\": 4, \"label\": \"Columns\" },\n  { \"type\": \"select\", \"id\": \"alignment\", \"label\": \"Alignment\", \"options\": [{\"value\":\"left\",\"label\":\"Left\"},{\"value\":\"center\",\"label\":\"Center\"}] },\n  { \"type\": \"color\", \"id\": \"accent\", \"label\": \"Accent color\" }\n]",
+    "quiz": [
+      {
+        "question": "Why should you prefer select/range over free text for design controls?",
+        "options": [
+          "It makes the UI less safe",
+          "It constrains input and protects layout consistency",
+          "It disables translations",
+          "It removes schema"
+        ],
+        "answer": 1,
+        "explanation": "Constrained inputs reduce invalid configurations."
+      },
+      {
+        "question": "Which setting type is best for merchant-chosen products?",
+        "options": [
+          "text",
+          "product",
+          "color",
+          "checkbox"
+        ],
+        "answer": 1,
+        "explanation": "Resource picker settings should be used for product references."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Input settings reference",
+        "url": "https://shopify.dev/docs/storefronts/themes/architecture/settings/input-settings",
+        "tag": "Official"
+      },
+      {
+        "label": "Setting data models",
+        "url": "https://shopify.dev/docs/storefronts/themes/architecture/settings",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Introduction to settings_schema.json and settings_data.json",
+        "description": "Explains why theme settings are structured the way they are.",
+        "embedUrl": "https://www.youtube.com/embed/Yd6V5BvZURM",
+        "watchUrl": "https://www.youtube.com/watch?v=Yd6V5BvZURM"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "How to Create Shopify Theme Settings Schema",
+        "description": "Practical setup of multiple setting types in schema.",
+        "embedUrl": "https://www.youtube.com/embed/eC18IgD3N0A",
+        "watchUrl": "https://www.youtube.com/watch?v=eC18IgD3N0A"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "slug": "settings-schema-json",
+    "title": "settings_schema.json Deep Dive",
+    "category": "sections",
+    "level": "Advanced",
+    "chapterId": 4,
+    "minutes": 22,
+    "summary": "Understand global theme settings, presets, defaults, settings_data.json, and the mental model behind theme-wide configuration.",
+    "concepts": [
+      "settings_schema.json defines top-level theme settings groups, not just per-section settings.",
+      "settings_data.json stores the merchant's chosen values for schema-defined options.",
+      "Global settings are useful for brand tokens, social links, typography, and cross-theme defaults.",
+      "A strong settings architecture prevents repetitive per-section configuration."
+    ],
+    "codeLang": "json",
+    "code": "[\n  {\n    \"name\": \"Brand\",\n    \"settings\": [\n      { \"type\": \"image_picker\", \"id\": \"logo\", \"label\": \"Logo\" },\n      { \"type\": \"color\", \"id\": \"brand_color\", \"label\": \"Brand color\" },\n      { \"type\": \"text\", \"id\": \"support_email\", \"label\": \"Support email\" }\n    ]\n  }\n]",
+    "quiz": [
+      {
+        "question": "What stores the merchant's chosen values?",
+        "options": [
+          "settings_data.json",
+          "schema.css",
+          "cart.js",
+          "locales/en.default.json"
+        ],
+        "answer": 0,
+        "explanation": "settings_data.json stores current selected values."
+      },
+      {
+        "question": "When are global theme settings useful?",
+        "options": [
+          "Only for webhooks",
+          "For brand-wide defaults and reusable configuration",
+          "Only for metafield definitions",
+          "Never"
+        ],
+        "answer": 1,
+        "explanation": "Global settings centralize reusable theme-wide options."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Theme settings",
+        "url": "https://shopify.dev/docs/storefronts/themes/architecture/settings",
+        "tag": "Official"
+      },
+      {
+        "label": "settings_schema.json guidance",
+        "url": "https://shopify.dev/docs/storefronts/themes/architecture/config/settings-schema-json",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Introduction to settings_schema.json and settings_data.json",
+        "description": "Focused explanation of settings_schema.json and settings_data.json.",
+        "embedUrl": "https://www.youtube.com/embed/Yd6V5BvZURM",
+        "watchUrl": "https://www.youtube.com/watch?v=Yd6V5BvZURM"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "How to Create Shopify Theme Settings Schema",
+        "description": "Hands-on creation of theme settings and schema groups.",
+        "embedUrl": "https://www.youtube.com/embed/eC18IgD3N0A",
+        "watchUrl": "https://www.youtube.com/watch?v=eC18IgD3N0A"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "slug": "dynamic-section-rendering",
+    "title": "Dynamic Section Rendering",
+    "category": "sections",
+    "level": "Advanced",
+    "chapterId": 4,
+    "minutes": 20,
+    "summary": "Update sections asynchronously, combine JSON templates with partial refreshes, and build Dawn-style high-performance UX.",
+    "concepts": [
+      "JSON templates define layout composition while Section Rendering API updates HTML fragments on demand.",
+      "You can request one or many sections and replace targeted DOM containers after an AJAX action.",
+      "This pattern is central to cart drawers, predictive updates, merchandising refreshes, and variant-driven UI.",
+      "Keep IDs and selectors predictable so replacement logic stays maintainable."
+    ],
+    "codeLang": "js",
+    "code": "async function refreshSections(sectionIds = ['cart-drawer', 'cart-icon-bubble']) {\n  const params = new URLSearchParams({ sections: sectionIds.join(',') });\n  const response = await fetch(`/?${params.toString()}`);\n  const html = await response.json();\n\n  sectionIds.forEach((id) => {\n    const container = document.getElementById(`shopify-section-${id}`);\n    if (container && html[id]) container.outerHTML = html[id];\n  });\n}",
+    "quiz": [
+      {
+        "question": "What does the Section Rendering API return?",
+        "options": [
+          "Only JSON product objects",
+          "Rendered HTML for requested sections",
+          "A new theme zip",
+          "Only CSS variables"
+        ],
+        "answer": 1,
+        "explanation": "It returns HTML snippets for the requested sections."
+      },
+      {
+        "question": "What is a common use case?",
+        "options": [
+          "Billing apps",
+          "Refreshing a cart drawer without full reload",
+          "Creating metafield definitions",
+          "Editing orders"
+        ],
+        "answer": 1,
+        "explanation": "Partial storefront refreshes are a primary use case."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Section Rendering API",
+        "url": "https://shopify.dev/docs/api/ajax/section-rendering",
+        "tag": "Official"
+      },
+      {
+        "label": "Bundled section rendering",
+        "url": "https://shopify.dev/docs/api/ajax/reference/cart#bundled-section-rendering",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Section Rendering API & Bundled Section Rendering",
+        "description": "Why and when to use Section Rendering API in modern themes.",
+        "embedUrl": "https://www.youtube.com/embed/0eFhWtpoZQc",
+        "watchUrl": "https://www.youtube.com/watch?v=0eFhWtpoZQc"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Shopify Section Rendering API – Update Sections Without Reload",
+        "description": "Practical partial-refresh example without page reload.",
+        "embedUrl": "https://www.youtube.com/embed/s1khSuOyAUA",
+        "watchUrl": "https://www.youtube.com/watch?v=s1khSuOyAUA"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "slug": "metafields-fundamentals",
+    "title": "Creating Metafields (UI + Liquid)",
+    "category": "metafields",
+    "level": "Intermediate",
+    "chapterId": 5,
+    "minutes": 22,
+    "summary": "Create metafield definitions in admin, attach data to products and collections, and render them safely in Liquid.",
+    "concepts": [
+      "Metafields store structured custom data on Shopify resources like products, variants, collections, pages, and customers.",
+      "Definitions make metafields typed, validated, and visible in the admin UI.",
+      "In Liquid, access metafields via namespace.key and use .value when the field type returns structured data.",
+      "Metafields are ideal when the data belongs to a specific resource instead of a reusable content model."
+    ],
+    "codeLang": "liquid",
+    "code": "{% if product.metafields.custom.subtitle != blank %}\n  <p class=\"subtitle\">{{ product.metafields.custom.subtitle }}</p>\n{% endif %}\n\n{% assign specs = product.metafields.custom.specifications.value %}\n{% if specs %}\n  <ul>\n    {% for spec in specs %}\n      <li>{{ spec }}</li>\n    {% endfor %}\n  </ul>\n{% endif %}",
+    "quiz": [
+      {
+        "question": "Where should product-specific custom data usually live?",
+        "options": [
+          "As a random snippet",
+          "In product metafields",
+          "Only in CSS",
+          "In localStorage"
+        ],
+        "answer": 1,
+        "explanation": "Metafields are the right home for resource-specific custom data."
+      },
+      {
+        "question": "Why create a metafield definition first?",
+        "options": [
+          "To get type safety and admin usability",
+          "To disable Liquid",
+          "To replace sections",
+          "To create partner accounts"
+        ],
+        "answer": 0,
+        "explanation": "Definitions give validation, type safety, and better editor UX."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Metafields overview",
+        "url": "https://shopify.dev/docs/apps/build/custom-data/metafields",
+        "tag": "Official"
+      },
+      {
+        "label": "Metafield definitions",
+        "url": "https://shopify.dev/docs/apps/build/custom-data/metafields/definitions",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Shopify Metaobjects vs Metafields",
+        "description": "Clear explanation of metafields vs metaobjects and when to use each.",
+        "embedUrl": "https://www.youtube.com/embed/KkKcnbAxe3U",
+        "watchUrl": "https://www.youtube.com/watch?v=KkKcnbAxe3U"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Create custom data models with metafields and metaobjects",
+        "description": "Hands-on metafields and custom data modeling walkthrough.",
+        "embedUrl": "https://www.youtube.com/embed/vxheJNF89GY",
+        "watchUrl": "https://www.youtube.com/watch?v=vxheJNF89GY"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "slug": "metafields-api-and-validation",
+    "title": "Metafields via API, Types, and Validation",
+    "category": "metafields",
+    "level": "Advanced",
+    "chapterId": 5,
+    "minutes": 24,
+    "summary": "Create metafield definitions through APIs, understand field types, and design validation rules that support content quality.",
+    "concepts": [
+      "Admin API can create and update metafield definitions for app-managed workflows.",
+      "Field types include single_line_text_field, number_integer, rich_text_field, dimension, rating, file_reference, list types, and more.",
+      "Validation rules prevent bad content and reduce fragile Liquid conditions.",
+      "The best data model starts with content design, not with Liquid implementation alone."
+    ],
+    "codeLang": "graphql",
+    "code": "mutation CreateDefinition {\n  metafieldDefinitionCreate(definition: {\n    name: \"Care instructions\"\n    namespace: \"custom\"\n    key: \"care_instructions\"\n    ownerType: PRODUCT\n    type: \"multi_line_text_field\"\n  }) {\n    createdDefinition { id name key }\n    userErrors { field message }\n  }\n}",
+    "quiz": [
+      {
+        "question": "Why add validation to a metafield definition?",
+        "options": [
+          "To make bad content easier",
+          "To protect content quality and developer assumptions",
+          "To disable admin editing",
+          "To create checkout UI extensions"
+        ],
+        "answer": 1,
+        "explanation": "Validation keeps custom data reliable."
+      },
+      {
+        "question": "Which API is commonly used for metafield definition creation now?",
+        "options": [
+          "Storefront API only",
+          "Admin API",
+          "Ajax API",
+          "Theme Check"
+        ],
+        "answer": 1,
+        "explanation": "Definitions are handled through admin-side APIs."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Metafield definition APIs",
+        "url": "https://shopify.dev/docs/api/admin-graphql/latest/mutations/metafieldDefinitionCreate",
+        "tag": "Official"
+      },
+      {
+        "label": "Metafield types",
+        "url": "https://shopify.dev/docs/apps/build/custom-data/metafields/list-of-data-types",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Shopify Metaobjects vs Metafields",
+        "description": "High-level framing of structured custom data types.",
+        "embedUrl": "https://www.youtube.com/embed/KkKcnbAxe3U",
+        "watchUrl": "https://www.youtube.com/watch?v=KkKcnbAxe3U"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Creating and Using Shopify Metaobjects",
+        "description": "Practical examples of building and using structured custom content.",
+        "embedUrl": "https://www.youtube.com/embed/HVMVvidjml4",
+        "watchUrl": "https://www.youtube.com/watch?v=HVMVvidjml4"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "slug": "metaobjects-and-structured-content",
+    "title": "Metaobjects and Structured Content Systems",
+    "category": "metafields",
+    "level": "Advanced",
+    "chapterId": 5,
+    "minutes": 24,
+    "summary": "Create reusable content models such as FAQs, authors, badges, ingredients, or buying guides with metaobjects.",
+    "concepts": [
+      "Metaobjects are reusable content entries with typed fields, ideal for structured content used across pages.",
+      "You can reference metaobjects from metafields or theme settings to create powerful content systems.",
+      "Metaobjects are better than hardcoded sections when content is shared across many surfaces.",
+      "They shine in editorial stores, brand-heavy merchandising, and large catalogs."
+    ],
+    "codeLang": "liquid",
+    "code": "{% assign guide = product.metafields.custom.buying_guide.value %}\n{% if guide %}\n  <article>\n    <h3>{{ guide.title }}</h3>\n    <div>{{ guide.body }}</div>\n  </article>\n{% endif %}\n\n{% assign faq_items = shop.metaobjects.faq.values %}\n{% for item in faq_items %}\n  <details><summary>{{ item.question }}</summary><p>{{ item.answer }}</p></details>\n{% endfor %}",
+    "quiz": [
+      {
+        "question": "When is a metaobject better than a plain product metafield?",
+        "options": [
+          "When the content is reusable and structured",
+          "When you only need one short note",
+          "When you need a CSS variable",
+          "When you need Ajax cart"
+        ],
+        "answer": 0,
+        "explanation": "Reusable structured content is a strong metaobject use case."
+      },
+      {
+        "question": "What is a common metaobject use case?",
+        "options": [
+          "Partner billing",
+          "Authors or FAQs reused across pages",
+          "Theme deployment",
+          "HMAC verification"
+        ],
+        "answer": 1,
+        "explanation": "Metaobjects work well for shared structured entries."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Metaobjects",
+        "url": "https://shopify.dev/docs/apps/build/custom-data/metaobjects",
+        "tag": "Official"
+      },
+      {
+        "label": "Using metaobjects in themes",
+        "url": "https://shopify.dev/docs/storefronts/themes/architecture/settings/metaobjects",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Shopify Metaobjects vs Metafields",
+        "description": "Conceptual framing for when to use metaobjects.",
+        "embedUrl": "https://www.youtube.com/embed/KkKcnbAxe3U",
+        "watchUrl": "https://www.youtube.com/watch?v=KkKcnbAxe3U"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Creating and Using Shopify Metaobjects",
+        "description": "Practical build examples that turn metaobjects into reusable theme content.",
+        "embedUrl": "https://www.youtube.com/embed/HVMVvidjml4",
+        "watchUrl": "https://www.youtube.com/watch?v=HVMVvidjml4"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "slug": "app-types",
+    "title": "Public vs Custom vs Embedded Apps",
+    "category": "apps",
+    "level": "Beginner",
+    "chapterId": 6,
+    "minutes": 22,
+    "summary": "Understand distribution models, installation flow, merchant fit, and where embedded apps belong in the Shopify ecosystem.",
+    "concepts": [
+      "Public apps are designed for broad merchant distribution while custom apps solve specific store needs.",
+      "Embedded apps live inside the Shopify admin and feel native with App Bridge and Polaris patterns.",
+      "The right app type depends on audience, maintenance model, support scope, and review requirements.",
+      "Architecture choices change when you target one merchant versus many merchants."
+    ],
+    "codeLang": "text",
+    "code": "App type decision guide:\n- Public app: many merchants, app review, broad support\n- Custom app: one merchant or tightly controlled use case\n- Embedded app: admin-native UX using App Bridge + embedded surfaces",
+    "quiz": [
+      {
+        "question": "Which app type is usually best for a one-store internal workflow?",
+        "options": [
+          "Public app",
+          "Custom app",
+          "Embedded app only",
+          "Theme app extension"
+        ],
+        "answer": 1,
+        "explanation": "Custom apps are often the right fit for single-merchant/internal workflows."
+      },
+      {
+        "question": "What is a key benefit of embedded apps?",
+        "options": [
+          "They remove APIs",
+          "They feel native inside Shopify admin",
+          "They replace checkout",
+          "They never need auth"
+        ],
+        "answer": 1,
+        "explanation": "Embedded apps create an admin-native merchant experience."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Build Shopify apps",
+        "url": "https://shopify.dev/docs/apps/build",
+        "tag": "Official"
+      },
+      {
+        "label": "Distribution methods",
+        "url": "https://shopify.dev/docs/apps/launch/distribution",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "How to create a Shopify App - An overview",
+        "description": "Strong overview of how Shopify app development works.",
+        "embedUrl": "https://www.youtube.com/embed/PB9gwBgQIk0",
+        "watchUrl": "https://www.youtube.com/watch?v=PB9gwBgQIk0"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "How To Create a Shopify App using Shopify CLI",
+        "description": "Practical app creation flow using Shopify CLI.",
+        "embedUrl": "https://www.youtube.com/embed/zODXdXGiIgY",
+        "watchUrl": "https://www.youtube.com/watch?v=zODXdXGiIgY"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "slug": "app-bridge-basics",
+    "title": "App Bridge Basics",
+    "category": "apps",
+    "level": "Intermediate",
+    "chapterId": 6,
+    "minutes": 20,
+    "summary": "Use App Bridge to build embedded admin experiences, navigation, actions, and contextual app behavior.",
+    "concepts": [
+      "App Bridge helps embedded apps integrate with Shopify admin navigation, actions, and context.",
+      "It works alongside session tokens, authentication, and modern app frameworks.",
+      "App Bridge keeps embedded apps closer to native Shopify UX expectations.",
+      "Use it intentionally: merchant productivity matters more than flashy UI."
+    ],
+    "codeLang": "js",
+    "code": "import { createApp } from '@shopify/app-bridge';\n\nconst app = createApp({\n  apiKey: window.shopify.config.apiKey,\n  host: new URLSearchParams(location.search).get('host')\n});\n\n// Example: redirect back into admin-aware navigation\napp.dispatch({ type: 'APP::NAVIGATION::REDIRECT', payload: { url: '/settings' } });",
+    "quiz": [
+      {
+        "question": "What is App Bridge mainly for?",
+        "options": [
+          "Theme schema",
+          "Embedded app integration with Shopify admin",
+          "Cart AJAX",
+          "Theme deployment"
+        ],
+        "answer": 1,
+        "explanation": "App Bridge is for embedded app UX integration."
+      },
+      {
+        "question": "Why does App Bridge matter?",
+        "options": [
+          "It removes authentication needs",
+          "It helps apps feel native inside Shopify admin",
+          "It creates metafields",
+          "It replaces GraphQL"
+        ],
+        "answer": 1,
+        "explanation": "It aligns embedded app behavior with admin context."
+      }
+    ],
+    "resources": [
+      {
+        "label": "App Bridge docs",
+        "url": "https://shopify.dev/docs/api/app-bridge",
+        "tag": "Official"
+      },
+      {
+        "label": "Session tokens",
+        "url": "https://shopify.dev/docs/apps/build/authentication-authorization/session-tokens",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Getting Started with Shopify App Bridge",
+        "description": "Conceptual introduction to embedded app UX.",
+        "embedUrl": "https://www.youtube.com/embed/TlmKRYltqFU",
+        "watchUrl": "https://www.youtube.com/watch?v=TlmKRYltqFU"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Shopify Polaris and App Bridge with examples",
+        "description": "Practical App Bridge and Polaris examples.",
+        "embedUrl": "https://www.youtube.com/embed/bLVbCAoQQH0",
+        "watchUrl": "https://www.youtube.com/watch?v=bLVbCAoQQH0"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "slug": "theme-app-extensions",
+    "title": "Theme App Extensions",
+    "category": "apps",
+    "level": "Intermediate",
+    "chapterId": 6,
+    "minutes": 22,
+    "summary": "Ship app blocks and app embeds without asking merchants to manually edit theme code.",
+    "concepts": [
+      "Theme app extensions let apps add storefront functionality through app blocks and embeds.",
+      "This is safer and more maintainable than asking merchants to paste Liquid into theme files.",
+      "Extensions separate app-owned code from merchant-owned theme code.",
+      "Good extension UX respects merchant control, performance, and fallback states."
+    ],
+    "codeLang": "liquid",
+    "code": "{% schema %}\n{\n  \"name\": \"App Upsell Block\",\n  \"target\": \"section\",\n  \"settings\": [\n    { \"type\": \"text\", \"id\": \"headline\", \"label\": \"Headline\" }\n  ]\n}\n{% endschema %}\n\n<div class=\"app-block\">{{ block.settings.headline }}</div>",
+    "quiz": [
+      {
+        "question": "Why are theme app extensions preferred over manual theme edits?",
+        "options": [
+          "They are safer and app-owned",
+          "They remove the need for storefront UI",
+          "They disable merchants from controlling placement",
+          "They only work in Hydrogen"
+        ],
+        "answer": 0,
+        "explanation": "Extensions reduce brittle theme modifications and improve app isolation."
+      },
+      {
+        "question": "What can theme app extensions provide?",
+        "options": [
+          "App blocks and embeds",
+          "Only metafield definitions",
+          "Only admin dashboards",
+          "Only checkout payments"
+        ],
+        "answer": 0,
+        "explanation": "App blocks and embeds are the main storefront extension surfaces."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Theme app extensions",
+        "url": "https://shopify.dev/docs/apps/build/online-store/theme-app-extensions",
+        "tag": "Official"
+      },
+      {
+        "label": "App blocks",
+        "url": "https://shopify.dev/docs/apps/online-store/theme-app-extensions/extensions-framework#app-blocks",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "How to create a Shopify App - An overview",
+        "description": "Broader app context before extension-specific implementation.",
+        "embedUrl": "https://www.youtube.com/embed/PB9gwBgQIk0",
+        "watchUrl": "https://www.youtube.com/watch?v=PB9gwBgQIk0"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Theme App Extension Tutorial: Build an Embedded App",
+        "description": "Theme app extension build walkthrough with an embedded app.",
+        "embedUrl": "https://www.youtube.com/embed/EwRKsQHwDCc",
+        "watchUrl": "https://www.youtube.com/watch?v=EwRKsQHwDCc"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "slug": "shopify-functions-intro",
+    "title": "Introduction to Shopify Functions",
+    "category": "apps",
+    "level": "Advanced",
+    "chapterId": 7,
+    "minutes": 24,
+    "summary": "Learn what Shopify Functions are, where they run, and how they replace many old script-based customizations.",
+    "concepts": [
+      "Shopify Functions extend backend commerce logic such as discounts, shipping, validation, and cart behavior.",
+      "They run in Shopify infrastructure, not as Liquid snippets or browser JavaScript.",
+      "Functions are a key part of modern extensibility and are important for advanced commerce workflows.",
+      "Use them when business rules belong near checkout or cart decision logic, not in theme presentation code."
+    ],
+    "codeLang": "text",
+    "code": "Common Function use cases:\n- Product / order discounts\n- Shipping customizations\n- Cart and checkout validations\n- Delivery or payment customizations\n\nThink: backend commerce logic, not storefront rendering.",
+    "quiz": [
+      {
+        "question": "Where do Shopify Functions run?",
+        "options": [
+          "Inside Liquid templates",
+          "In Shopify backend infrastructure",
+          "Only in the merchant browser",
+          "Only in CSS"
+        ],
+        "answer": 1,
+        "explanation": "Functions run server-side within Shopify extensibility surfaces."
+      },
+      {
+        "question": "What kind of problem suits Functions best?",
+        "options": [
+          "Hero banner colors",
+          "Backend commerce rules like discounts and validations",
+          "Theme translations only",
+          "Partner dashboard setup"
+        ],
+        "answer": 1,
+        "explanation": "Functions are for commerce logic, not storefront presentation."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Functions docs",
+        "url": "https://shopify.dev/docs/apps/build/functions",
+        "tag": "Official"
+      },
+      {
+        "label": "Functions API references",
+        "url": "https://shopify.dev/docs/api/functions",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Shopify Functions - Overview and how to get started",
+        "description": "High-level mental model for Shopify Functions.",
+        "embedUrl": "https://www.youtube.com/embed/gvl_qcTY6GQ",
+        "watchUrl": "https://www.youtube.com/watch?v=gvl_qcTY6GQ"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Getting Started with Shopify Functions",
+        "description": "Step-by-step working setup for a real Function.",
+        "embedUrl": "https://www.youtube.com/embed/8fH1Nj_FRQ4",
+        "watchUrl": "https://www.youtube.com/watch?v=8fH1Nj_FRQ4"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "slug": "admin-api-rest-vs-graphql",
+    "title": "Admin API (REST + GraphQL)",
+    "category": "apis",
+    "level": "Intermediate",
+    "chapterId": 8,
+    "minutes": 26,
+    "summary": "Understand the Admin API, compare REST and GraphQL, and choose the right approach for integrations and apps.",
+    "concepts": [
+      "Admin API gives apps secure access to merchant data and operations.",
+      "GraphQL is now the strategic default for many new Shopify admin workflows because it is flexible and efficient.",
+      "REST still matters in legacy workflows and in existing integrations you may maintain.",
+      "Good API work starts with scopes, rate limits, and careful resource ownership."
+    ],
+    "codeLang": "graphql",
+    "code": "query Products {\n  products(first: 5) {\n    nodes {\n      id\n      title\n      handle\n      totalInventory\n    }\n  }\n}\n\n# REST example\nGET /admin/api/2025-10/products.json?limit=5",
+    "quiz": [
+      {
+        "question": "What is a common reason teams prefer GraphQL?",
+        "options": [
+          "It always uses less auth",
+          "It lets you request exactly the fields you need",
+          "It replaces Liquid",
+          "It is required for CSS"
+        ],
+        "answer": 1,
+        "explanation": "GraphQL reduces over-fetching and supports flexible queries."
+      },
+      {
+        "question": "What should you check before making admin requests?",
+        "options": [
+          "Scopes and permissions",
+          "Header color",
+          "Sidebar width",
+          "Theme font"
+        ],
+        "answer": 0,
+        "explanation": "API scopes are critical to secure access."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Admin GraphQL API",
+        "url": "https://shopify.dev/docs/api/admin-graphql",
+        "tag": "Official"
+      },
+      {
+        "label": "Admin REST API",
+        "url": "https://shopify.dev/docs/api/admin-rest",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Shopify API for Beginners (2026) – Full Guide",
+        "description": "Beginner-friendly Shopify API overview.",
+        "embedUrl": "https://www.youtube.com/embed/uF0KGzbHlak",
+        "watchUrl": "https://www.youtube.com/watch?v=uF0KGzbHlak"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Shopify Admin API Tutorial | GraphQL & Rest Queries",
+        "description": "Practical REST and GraphQL request examples.",
+        "embedUrl": "https://www.youtube.com/embed/mDnzI_RSYKE",
+        "watchUrl": "https://www.youtube.com/watch?v=mDnzI_RSYKE"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "slug": "storefront-api",
+    "title": "Storefront API",
+    "category": "apis",
+    "level": "Intermediate",
+    "chapterId": 8,
+    "minutes": 22,
+    "summary": "Use the Storefront API for headless storefronts, custom frontends, and external experiences that need product and cart data.",
+    "concepts": [
+      "Storefront API exposes product, collection, cart, checkout-related, and customer-facing commerce data.",
+      "It is designed for headless builds, custom buying experiences, and non-theme frontends.",
+      "The API uses GraphQL and public access tokens with carefully controlled access.",
+      "It is especially important in Hydrogen and custom storefront scenarios."
+    ],
+    "codeLang": "graphql",
+    "code": "query ProductCard($handle: String!) {\n  product(handle: $handle) {\n    title\n    description\n    featuredImage { url altText }\n    priceRange {\n      minVariantPrice { amount currencyCode }\n    }\n  }\n}",
+    "quiz": [
+      {
+        "question": "Which API is most relevant for headless storefront product data?",
+        "options": [
+          "Ajax API",
+          "Storefront API",
+          "Theme Check",
+          "Partner Dashboard"
+        ],
+        "answer": 1,
+        "explanation": "The Storefront API is designed for custom storefront experiences."
+      },
+      {
+        "question": "What style of API does the Storefront API use?",
+        "options": [
+          "SOAP",
+          "GraphQL",
+          "Only REST",
+          "SQL"
+        ],
+        "answer": 1,
+        "explanation": "It is GraphQL-based."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Storefront API",
+        "url": "https://shopify.dev/docs/api/storefront",
+        "tag": "Official"
+      },
+      {
+        "label": "Storefront access tokens",
+        "url": "https://shopify.dev/docs/api/storefront#authentication",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Add Shopify Products to Any Website (Buy Button and Storefront API)",
+        "description": "Strong intro to Storefront API use cases.",
+        "embedUrl": "https://www.youtube.com/embed/C8O3IK4NXm8",
+        "watchUrl": "https://www.youtube.com/watch?v=C8O3IK4NXm8"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "How to create Shopify Storefront API access token (2026)",
+        "description": "Token setup and access workflow for Storefront API.",
+        "embedUrl": "https://www.youtube.com/embed/pKXwa11DZP0",
+        "watchUrl": "https://www.youtube.com/watch?v=pKXwa11DZP0"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "slug": "webhooks-and-hmac",
+    "title": "Webhooks Setup and HMAC Verification",
+    "category": "apis",
+    "level": "Advanced",
+    "chapterId": 8,
+    "minutes": 24,
+    "summary": "Subscribe to events, verify signatures, and process webhook payloads safely in real integrations.",
+    "concepts": [
+      "Webhooks push event data to your app when store data changes, instead of forcing constant polling.",
+      "You must verify the HMAC signature using your app secret to trust the payload.",
+      "Process webhooks idempotently because deliveries can repeat.",
+      "Keep webhook handlers fast and move slow processing to queues or jobs when needed."
+    ],
+    "codeLang": "js",
+    "code": "import crypto from 'node:crypto';\n\nfunction verifyWebhook(rawBody, hmacHeader, secret) {\n  const digest = crypto\n    .createHmac('sha256', secret)\n    .update(rawBody, 'utf8')\n    .digest('base64');\n\n  return crypto.timingSafeEqual(\n    Buffer.from(digest),\n    Buffer.from(hmacHeader)\n  );\n}",
+    "quiz": [
+      {
+        "question": "Why verify a webhook HMAC?",
+        "options": [
+          "To style the admin",
+          "To confirm the payload really came from Shopify",
+          "To render a section",
+          "To create a metafield"
+        ],
+        "answer": 1,
+        "explanation": "HMAC validation protects you from spoofed requests."
+      },
+      {
+        "question": "Why should webhook handlers be idempotent?",
+        "options": [
+          "Because webhooks can be retried or duplicated",
+          "Because HMAC is optional",
+          "Because Liquid needs it",
+          "Because CSS depends on it"
+        ],
+        "answer": 0,
+        "explanation": "Webhook delivery can repeat, so handlers must be safe to run more than once."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Webhooks overview",
+        "url": "https://shopify.dev/docs/apps/build/webhooks",
+        "tag": "Official"
+      },
+      {
+        "label": "Webhook HTTPS guide",
+        "url": "https://shopify.dev/docs/apps/build/webhooks/subscribe/https",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Getting Started with Shopify webhooks using the Shopify Admin",
+        "description": "Explains setup, events, and delivery model.",
+        "embedUrl": "https://www.youtube.com/embed/VIvp8Adze_E",
+        "watchUrl": "https://www.youtube.com/watch?v=VIvp8Adze_E"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "How to Verify Shopify Webhooks",
+        "description": "Step-by-step HMAC verification example.",
+        "embedUrl": "https://www.youtube.com/embed/MXjSQsmR3EU",
+        "watchUrl": "https://www.youtube.com/watch?v=MXjSQsmR3EU"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "slug": "real-world-api-workflows",
+    "title": "Real-World API Workflows",
+    "category": "apis",
+    "level": "Advanced",
+    "chapterId": 8,
+    "minutes": 22,
+    "summary": "Combine Admin API, Storefront API, webhooks, queues, and background jobs into production-worthy data flows.",
+    "concepts": [
+      "Real systems rarely use one API in isolation; they combine reads, writes, events, retries, and logs.",
+      "A common pattern is Admin API for setup, webhooks for changes, and background jobs for heavy processing.",
+      "Good workflow design includes observability, retries, idempotency, and rate-limit awareness.",
+      "Think in business workflows, not only in endpoint calls."
+    ],
+    "codeLang": "text",
+    "code": "Example workflow:\n1. App installs and requests scopes\n2. App reads products through Admin API\n3. App subscribes to product/update webhook\n4. Webhook queues re-sync job\n5. Dashboard shows latest sync status and errors",
+    "quiz": [
+      {
+        "question": "What makes an API workflow production-ready?",
+        "options": [
+          "Only one API call",
+          "Retries, logging, idempotency, and clear ownership",
+          "Skipping monitoring",
+          "Avoiding webhooks"
+        ],
+        "answer": 1,
+        "explanation": "Production systems need reliability, not just a working demo."
+      },
+      {
+        "question": "Why combine webhooks with background jobs?",
+        "options": [
+          "To slow the app down",
+          "To keep handlers fast and process heavy work safely",
+          "To remove security",
+          "To avoid scopes"
+        ],
+        "answer": 1,
+        "explanation": "Fast handlers plus queued processing is a robust pattern."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Rate limits",
+        "url": "https://shopify.dev/docs/api/usage/rate-limits",
+        "tag": "Official"
+      },
+      {
+        "label": "API versioning",
+        "url": "https://shopify.dev/docs/api/usage/versioning",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Shopify API for Beginners (2026) – Full Guide",
+        "description": "Useful top-down API systems overview.",
+        "embedUrl": "https://www.youtube.com/embed/uF0KGzbHlak",
+        "watchUrl": "https://www.youtube.com/watch?v=uF0KGzbHlak"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "How to Use the Shopify API and Make GraphQL Requests",
+        "description": "Practical API request workflow that maps well to real integrations.",
+        "embedUrl": "https://www.youtube.com/embed/Q68EXTH08vI",
+        "watchUrl": "https://www.youtube.com/watch?v=Q68EXTH08vI"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "slug": "ajax-cart-api",
+    "title": "Cart API (add / remove / update items)",
+    "category": "javascript",
+    "level": "Intermediate",
+    "chapterId": 9,
+    "minutes": 22,
+    "summary": "Use the Ajax Cart API to add items, change quantities, remove lines, and read cart state without full page reloads.",
+    "concepts": [
+      "The Ajax API is central to theme-side cart interactions in non-headless storefronts.",
+      "Use /cart/add.js, /cart/change.js, /cart/update.js, and /cart.js for cart state operations.",
+      "Always show pending, success, and error states during cart actions.",
+      "Pair cart requests with partial UI refreshes for a polished experience."
+    ],
+    "codeLang": "js",
+    "code": "async function addToCart(variantId, quantity = 1) {\n  const response = await fetch('/cart/add.js', {\n    method: 'POST',\n    headers: { 'Content-Type': 'application/json' },\n    body: JSON.stringify({ items: [{ id: variantId, quantity }] })\n  });\n\n  if (!response.ok) throw new Error('Could not add item');\n  return response.json();\n}",
+    "quiz": [
+      {
+        "question": "Which endpoint is used to add a cart item?",
+        "options": [
+          "/products/add",
+          "/cart/add.js",
+          "/admin/cart",
+          "/checkout/add"
+        ],
+        "answer": 1,
+        "explanation": "Add items with /cart/add.js."
+      },
+      {
+        "question": "Why is loading state important for cart actions?",
+        "options": [
+          "It looks busy",
+          "It communicates progress and prevents confused repeat clicks",
+          "It changes metafields",
+          "It is only for apps"
+        ],
+        "answer": 1,
+        "explanation": "Users need clear feedback during asynchronous cart updates."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Ajax API",
+        "url": "https://shopify.dev/docs/api/ajax",
+        "tag": "Official"
+      },
+      {
+        "label": "Cart API reference",
+        "url": "https://shopify.dev/docs/api/ajax/reference/cart",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Shopify Liquid Tutorial - Shopify Ajax API",
+        "description": "Core theory of Shopify's theme-side Ajax APIs.",
+        "embedUrl": "https://www.youtube.com/embed/pde0Lzf0A_w",
+        "watchUrl": "https://www.youtube.com/watch?v=pde0Lzf0A_w"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Creating a Shopify ajax cart drawer",
+        "description": "Building a cart drawer with real requests and UI updates.",
+        "embedUrl": "https://www.youtube.com/embed/gKXGjvl8Alc",
+        "watchUrl": "https://www.youtube.com/watch?v=gKXGjvl8Alc"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "slug": "section-rendering-api",
+    "title": "Section Rendering API",
+    "category": "javascript",
+    "level": "Intermediate",
+    "chapterId": 9,
+    "minutes": 20,
+    "summary": "Request fresh HTML for one or more sections and swap it into the page after cart or product interactions.",
+    "concepts": [
+      "Section Rendering API is often the missing piece between Ajax data changes and full visual UI updates.",
+      "You can use it after cart operations, filtering, product option changes, or bundled cart updates.",
+      "It lets the server keep theme logic authoritative while the frontend stays fast.",
+      "This is often cleaner than rebuilding markup entirely in JavaScript."
+    ],
+    "codeLang": "js",
+    "code": "async function renderSections(ids) {\n  const params = new URLSearchParams({ sections: ids.join(',') });\n  const result = await fetch(`/?${params}`);\n  return result.json();\n}\n\nconst html = await renderSections(['cart-drawer', 'cart-icon-bubble']);\nObject.entries(html).forEach(([id, markup]) => {\n  const section = document.getElementById(`shopify-section-${id}`);\n  if (section) section.outerHTML = markup;\n});",
+    "quiz": [
+      {
+        "question": "Why use Section Rendering API instead of rebuilding all HTML manually?",
+        "options": [
+          "It keeps server-side Liquid authoritative",
+          "It removes all JavaScript",
+          "It creates access tokens",
+          "It only works for apps"
+        ],
+        "answer": 0,
+        "explanation": "It reuses server-rendered theme logic and keeps frontend code simpler."
+      },
+      {
+        "question": "What does the request return?",
+        "options": [
+          "Only cart totals",
+          "A JSON map of section IDs to HTML markup",
+          "A theme zip file",
+          "Only CSS"
+        ],
+        "answer": 1,
+        "explanation": "The response maps requested section IDs to rendered HTML snippets."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Section Rendering API",
+        "url": "https://shopify.dev/docs/api/ajax/section-rendering",
+        "tag": "Official"
+      },
+      {
+        "label": "Bundled section rendering with cart",
+        "url": "https://shopify.dev/docs/api/ajax/reference/cart#bundled-section-rendering",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Section Rendering API & Bundled Section Rendering",
+        "description": "Conceptual intro to partial refreshes.",
+        "embedUrl": "https://www.youtube.com/embed/0eFhWtpoZQc",
+        "watchUrl": "https://www.youtube.com/watch?v=0eFhWtpoZQc"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Shopify Section Rendering API – Update Sections Without Reload",
+        "description": "Practical implementation of DOM section replacement.",
+        "embedUrl": "https://www.youtube.com/embed/s1khSuOyAUA",
+        "watchUrl": "https://www.youtube.com/watch?v=s1khSuOyAUA"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "slug": "pub-sub-event-system",
+    "title": "Pub/Sub Event System",
+    "category": "javascript",
+    "level": "Advanced",
+    "chapterId": 9,
+    "minutes": 18,
+    "summary": "Use a lightweight event system so product forms, drawers, badges, and recommendations stay decoupled.",
+    "concepts": [
+      "A pub/sub pattern keeps theme JavaScript modular when many components react to the same event.",
+      "Cart updated, variant changed, and section refreshed are common event channels.",
+      "This helps large themes avoid tight coupling between unrelated DOM modules.",
+      "Good event names and payload contracts matter as much as the code itself."
+    ],
+    "codeLang": "js",
+    "code": "const bus = new EventTarget();\n\nexport function publish(name, detail = {}) {\n  bus.dispatchEvent(new CustomEvent(name, { detail }));\n}\n\nexport function subscribe(name, callback) {\n  const handler = (event) => callback(event.detail);\n  bus.addEventListener(name, handler);\n  return () => bus.removeEventListener(name, handler);\n}",
+    "quiz": [
+      {
+        "question": "Why use pub/sub in a theme?",
+        "options": [
+          "To make modules more tightly coupled",
+          "To let separate components react to shared events cleanly",
+          "To remove Ajax",
+          "To avoid all state"
+        ],
+        "answer": 1,
+        "explanation": "Pub/sub reduces direct dependencies between modules."
+      },
+      {
+        "question": "Which is a good pub/sub use case?",
+        "options": [
+          "Theme fonts",
+          "Cart updated event triggering multiple UI refreshes",
+          "Creating partner accounts",
+          "Defining metafield types"
+        ],
+        "answer": 1,
+        "explanation": "Shared cart or variant events are ideal for pub/sub."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Javascript in themes",
+        "url": "https://shopify.dev/docs/storefronts/themes/best-practices/javascript-and-stylesheet-tags",
+        "tag": "Official"
+      },
+      {
+        "label": "Dawn repository",
+        "url": "https://github.com/Shopify/dawn",
+        "tag": "Reference"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Using Javascript and The Custom Elements Web API in Shopify",
+        "description": "Component-oriented JavaScript thinking inside Shopify themes.",
+        "embedUrl": "https://www.youtube.com/embed/3WuI5_T3S-A",
+        "watchUrl": "https://www.youtube.com/watch?v=3WuI5_T3S-A"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Breakdown the Dawn Cart using AJAX API + Section Rendering",
+        "description": "A Dawn cart breakdown showing real event-driven refresh behavior.",
+        "embedUrl": "https://www.youtube.com/embed/y36M8-8XZWk",
+        "watchUrl": "https://www.youtube.com/watch?v=y36M8-8XZWk"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "slug": "dynamic-cart-without-reload",
+    "title": "Dynamic Cart Updates without Reload",
+    "category": "javascript",
+    "level": "Advanced",
+    "chapterId": 9,
+    "minutes": 22,
+    "summary": "Combine cart requests, optimistic UI, section rendering, and a small event system to build a polished cart drawer.",
+    "concepts": [
+      "The best cart experiences update line items, totals, badges, and drawers in one coherent flow.",
+      "You need request orchestration, loading states, error handling, and partial refresh logic.",
+      "Keep your cart module focused on predictable lifecycle steps.",
+      "This pattern is a major theme-development skill for real storefront work."
+    ],
+    "codeLang": "js",
+    "code": "async function updateCartAndUI(line, quantity) {\n  document.documentElement.classList.add('is-cart-loading');\n  try {\n    await fetch('/cart/change.js', {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify({ line, quantity, sections: 'cart-drawer,cart-icon-bubble' })\n    });\n    publish('cart:updated');\n    await refreshSections(['cart-drawer', 'cart-icon-bubble']);\n  } finally {\n    document.documentElement.classList.remove('is-cart-loading');\n  }\n}",
+    "quiz": [
+      {
+        "question": "What makes a dynamic cart feel polished?",
+        "options": [
+          "No loading or error handling",
+          "Coordinated state, UI refresh, and feedback",
+          "Only CSS transitions",
+          "Only GraphQL"
+        ],
+        "answer": 1,
+        "explanation": "Good cart UX combines backend updates with clear UI states."
+      },
+      {
+        "question": "What commonly updates after a line item change?",
+        "options": [
+          "Only the page title",
+          "Drawer contents, icon bubble, totals, and notices",
+          "Only the favicon",
+          "Only the footer"
+        ],
+        "answer": 1,
+        "explanation": "A complete cart experience updates multiple linked UI surfaces."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Cart reference",
+        "url": "https://shopify.dev/docs/api/ajax/reference/cart",
+        "tag": "Official"
+      },
+      {
+        "label": "Section Rendering API",
+        "url": "https://shopify.dev/docs/api/ajax/section-rendering",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Section Rendering API & Bundled Section Rendering",
+        "description": "Why partial rendering matters in live cart UX.",
+        "embedUrl": "https://www.youtube.com/embed/0eFhWtpoZQc",
+        "watchUrl": "https://www.youtube.com/watch?v=0eFhWtpoZQc"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Breakdown the Dawn Cart using AJAX API + Section Rendering",
+        "description": "Practical Dawn-style cart update workflow.",
+        "embedUrl": "https://www.youtube.com/embed/y36M8-8XZWk",
+        "watchUrl": "https://www.youtube.com/watch?v=y36M8-8XZWk"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "slug": "shopify-cli-setup",
+    "title": "Shopify CLI Setup and Usage",
+    "category": "tools",
+    "level": "Beginner",
+    "chapterId": 10,
+    "minutes": 20,
+    "summary": "Install Shopify CLI, log in, run local development, pull theme code, and use core theme/app commands.",
+    "concepts": [
+      "Shopify CLI is the standard local development tool for themes, apps, and extensions.",
+      "Use it to run theme dev servers, create apps, and push or pull theme code safely.",
+      "CLI-based workflow improves speed, previews, and source control hygiene.",
+      "A strong local setup reduces mistakes before deployment."
+    ],
+    "codeLang": "bash",
+    "code": "shopify auth login\nshopify theme dev\nshopify theme pull\nshopify theme push --unpublished\nshopify app init",
+    "quiz": [
+      {
+        "question": "What is shopify theme dev primarily used for?",
+        "options": [
+          "Creating metafield definitions only",
+          "Running a local theme development workflow",
+          "Sending webhooks",
+          "Editing checkout settings"
+        ],
+        "answer": 1,
+        "explanation": "It runs a live local theme development environment."
+      },
+      {
+        "question": "Why prefer CLI workflow over editing production themes directly?",
+        "options": [
+          "It is slower",
+          "It supports safer previews, version control, and testing",
+          "It removes need for Git",
+          "It disables theme editor"
+        ],
+        "answer": 1,
+        "explanation": "CLI improves safety and speed in development."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Shopify CLI",
+        "url": "https://shopify.dev/docs/storefronts/themes/tools/cli",
+        "tag": "Official"
+      },
+      {
+        "label": "CLI install",
+        "url": "https://shopify.dev/docs/api/shopify-cli",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Getting started with the Shopify CLI (theme development)",
+        "description": "CLI basics and what the tool is for.",
+        "embedUrl": "https://www.youtube.com/embed/wX7q29PY2ps",
+        "watchUrl": "https://www.youtube.com/watch?v=wX7q29PY2ps"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "How to use Shopify CLI to develop faster",
+        "description": "Useful setup and speed-focused CLI workflow tips.",
+        "embedUrl": "https://www.youtube.com/embed/zeZTgOiU0LI",
+        "watchUrl": "https://www.youtube.com/watch?v=zeZTgOiU0LI"
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "slug": "dawn-theme-workflow",
+    "title": "Working with the Dawn Theme",
+    "category": "tools",
+    "level": "Intermediate",
+    "chapterId": 10,
+    "minutes": 22,
+    "summary": "Study Dawn as a reference architecture for modern Shopify theme patterns, including sections, JS, and product UX.",
+    "concepts": [
+      "Dawn is Shopify's reference theme for modern Online Store 2.0 patterns.",
+      "Studying Dawn teaches section structure, performance habits, product UX conventions, and JS architecture.",
+      "You do not need to copy Dawn blindly; you need to understand its patterns.",
+      "Use Dawn as a benchmark for quality, accessibility, and maintainable storefront behavior."
+    ],
+    "codeLang": "text",
+    "code": "Dawn study checklist:\n- main-product section\n- cart drawer / cart notification patterns\n- global.js and component events\n- product media and variant changes\n- section schema conventions\n- localization patterns",
+    "quiz": [
+      {
+        "question": "Why study Dawn?",
+        "options": [
+          "Because it is the only valid theme",
+          "Because it is a strong reference implementation for modern theme patterns",
+          "Because it replaces the docs",
+          "Because it disables apps"
+        ],
+        "answer": 1,
+        "explanation": "Dawn is valuable as a reference architecture."
+      },
+      {
+        "question": "What is the best way to use Dawn?",
+        "options": [
+          "Copy everything without understanding",
+          "Study patterns, decisions, and implementation quality",
+          "Use it only for logos",
+          "Avoid reading the code"
+        ],
+        "answer": 1,
+        "explanation": "Treat Dawn as a learning reference, not a blind copy source."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Dawn GitHub repo",
+        "url": "https://github.com/Shopify/dawn",
+        "tag": "Official"
+      },
+      {
+        "label": "Theme best practices",
+        "url": "https://shopify.dev/docs/storefronts/themes/best-practices",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Shopify's Dawn Theme - A Closer Look",
+        "description": "Strong overview of what Dawn teaches developers.",
+        "embedUrl": "https://www.youtube.com/embed/OWqqUhLdH7k",
+        "watchUrl": "https://www.youtube.com/watch?v=OWqqUhLdH7k"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Building on Dawn Theme",
+        "description": "Real coding series built on Dawn.",
+        "embedUrl": "https://www.youtube.com/embed/C9P0i6uGSVU",
+        "watchUrl": "https://www.youtube.com/watch?v=C9P0i6uGSVU"
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "slug": "hydrogen-intro",
+    "title": "Introduction to Hydrogen",
+    "category": "tools",
+    "level": "Advanced",
+    "chapterId": 11,
+    "minutes": 24,
+    "summary": "Learn when headless makes sense, how Hydrogen uses React and the Storefront API, and how to think about Oxygen deployment.",
+    "concepts": [
+      "Hydrogen is Shopify's React framework for headless storefronts.",
+      "It combines Storefront API access, commerce primitives, and opinionated app structure.",
+      "Headless is powerful but adds complexity, so use it for real business reasons rather than trend-following.",
+      "Hydrogen plus Oxygen is a complete path for Shopify-managed headless deployment."
+    ],
+    "codeLang": "jsx",
+    "code": "import { useShopQuery, gql } from '@shopify/hydrogen';\n\nexport function FeaturedProduct() {\n  const { data } = useShopQuery({\n    query: gql`query { products(first: 1) { nodes { title handle } } }`\n  });\n\n  return <h2>{data.products.nodes[0].title}</h2>;\n}",
+    "quiz": [
+      {
+        "question": "When is Hydrogen a strong fit?",
+        "options": [
+          "For every store by default",
+          "When a project truly needs headless flexibility and custom experience control",
+          "Only for metafields",
+          "Only for apps"
+        ],
+        "answer": 1,
+        "explanation": "Headless should be chosen for clear business and technical reasons."
+      },
+      {
+        "question": "Which API powers Hydrogen storefront data?",
+        "options": [
+          "Admin REST",
+          "Storefront API",
+          "Ajax API only",
+          "Theme Check"
+        ],
+        "answer": 1,
+        "explanation": "Hydrogen relies heavily on the Storefront API."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Hydrogen docs",
+        "url": "https://shopify.dev/docs/storefronts/headless/hydrogen",
+        "tag": "Official"
+      },
+      {
+        "label": "Oxygen deployments",
+        "url": "https://shopify.dev/docs/storefronts/headless/hydrogen/deployments",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Shopify Hydrogen in 10 Minutes",
+        "description": "Quick mental model for Hydrogen and headless Shopify.",
+        "embedUrl": "https://www.youtube.com/embed/n-Y60GpHvkY",
+        "watchUrl": "https://www.youtube.com/watch?v=n-Y60GpHvkY"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Set Up a Headless Storefront with Hydrogen and Oxygen",
+        "description": "Hydrogen + Oxygen setup walkthrough.",
+        "embedUrl": "https://www.youtube.com/embed/j4By5pFWZkM",
+        "watchUrl": "https://www.youtube.com/watch?v=j4By5pFWZkM"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "slug": "workflow-best-practices",
+    "title": "Development Workflow Best Practices",
+    "category": "tools",
+    "level": "Advanced",
+    "chapterId": 12,
+    "minutes": 24,
+    "summary": "Use Git, environments, QA, deployment checklists, and handoff habits so your Shopify work ships safely and stays maintainable.",
+    "concepts": [
+      "A professional workflow includes source control, local development, preview themes, staged releases, and rollback awareness.",
+      "QA should cover happy paths, empty states, accessibility, performance, and merchant settings.",
+      "Handoff quality matters: documentation, SOPs, known limits, and support expectations prevent chaos later.",
+      "This is the difference between a good demo and a professional delivery workflow."
+    ],
+    "codeLang": "bash",
+    "code": "git checkout -b feature/cart-upsell\nshopify theme dev\nshopify theme push --unpublished\n# QA preview theme\nshopify theme push --theme 123456789\n# Release after signoff",
+    "quiz": [
+      {
+        "question": "What makes a Shopify delivery workflow professional?",
+        "options": [
+          "Editing production directly and hoping",
+          "Version control, preview environments, QA, and clear handoff",
+          "Skipping QA to save time",
+          "Only using the theme editor"
+        ],
+        "answer": 1,
+        "explanation": "Professional delivery is process + code quality."
+      },
+      {
+        "question": "Which item belongs in a strong client handoff?",
+        "options": [
+          "No documentation",
+          "Release notes, SOPs, and known limitations",
+          "Only a zip file name",
+          "Just a screenshot"
+        ],
+        "answer": 1,
+        "explanation": "Clarity and maintainability matter after launch too."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Theme Check",
+        "url": "https://shopify.dev/docs/storefronts/themes/tools/theme-check",
+        "tag": "Official"
+      },
+      {
+        "label": "Theme best practices",
+        "url": "https://shopify.dev/docs/storefronts/themes/best-practices",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Shopify Theme Development - Introduction, Setting Up Local Development",
+        "description": "Good setup and development habits from the start.",
+        "embedUrl": "https://www.youtube.com/embed/1dznKWXkL3E",
+        "watchUrl": "https://www.youtube.com/watch?v=1dznKWXkL3E"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Shopify Theme Developer Tutorial: Workflow and Deployment",
+        "description": "Deployment-oriented workflow and release process.",
+        "embedUrl": "https://www.youtube.com/embed/N_0MlOkhOsI",
+        "watchUrl": "https://www.youtube.com/watch?v=N_0MlOkhOsI"
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "slug": "polaris-graphiql-and-partner-dashboard",
+    "title": "Polaris, GraphiQL, VS Code, and Partner Dashboard",
+    "category": "tools",
+    "level": "Intermediate",
+    "chapterId": 12,
+    "minutes": 22,
+    "summary": "Round out your toolkit with Shopify's admin UI system, API explorers, local editor tooling, and partner operations.",
+    "concepts": [
+      "Polaris provides design language and UI components for merchant-facing admin experiences.",
+      "GraphiQL and API explorers help you inspect schemas, test queries, and learn faster.",
+      "VS Code plus Shopify extensions and linting improve day-to-day developer speed.",
+      "Partner Dashboard is where you manage apps, stores, credentials, and distribution setup."
+    ],
+    "codeLang": "tsx",
+    "code": "import { Page, Card, Text } from '@shopify/polaris';\n\nexport function DashboardCard() {\n  return (\n    <Page title=\"Sync status\">\n      <Card><Text as=\"p\">Latest sync completed successfully.</Text></Card>\n    </Page>\n  );\n}",
+    "quiz": [
+      {
+        "question": "What is Polaris mainly for?",
+        "options": [
+          "Liquid rendering",
+          "Merchant-facing admin UI components",
+          "Webhook verification",
+          "Theme deployment"
+        ],
+        "answer": 1,
+        "explanation": "Polaris is Shopify's admin-oriented UI system."
+      },
+      {
+        "question": "What is GraphiQL useful for?",
+        "options": [
+          "Writing CSS",
+          "Exploring and testing GraphQL queries",
+          "Editing schema.json",
+          "Running checkout"
+        ],
+        "answer": 1,
+        "explanation": "GraphiQL is ideal for schema exploration and query testing."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Polaris",
+        "url": "https://polaris.shopify.com/",
+        "tag": "Official"
+      },
+      {
+        "label": "API exploration",
+        "url": "https://shopify.dev/docs/api/usage/api-exploration",
+        "tag": "Official"
+      },
+      {
+        "label": "VS Code extension",
+        "url": "https://marketplace.visualstudio.com/items?itemName=Shopify.theme-check-vscode",
+        "tag": "Tool"
+      },
+      {
+        "label": "Partners",
+        "url": "https://www.shopify.com/partners",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Shopify GraphiQL Admin API Explained",
+        "description": "Clear GraphiQL walkthrough for Admin API exploration.",
+        "embedUrl": "https://www.youtube.com/embed/0wWqdyqEBcE",
+        "watchUrl": "https://www.youtube.com/watch?v=0wWqdyqEBcE"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "How to Create a Shopify App in the Partner Dashboard",
+        "description": "Partner Dashboard setup and app creation workflow.",
+        "embedUrl": "https://www.youtube.com/embed/4j8oLIWGzc8",
+        "watchUrl": "https://www.youtube.com/watch?v=4j8oLIWGzc8"
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "slug": "checkout-ui-extensions",
+    "title": "Checkout UI Extensions",
+    "category": "apps",
+    "level": "Advanced",
+    "chapterId": 7,
+    "minutes": 22,
+    "summary": "Extend checkout with UI components, validation, and workflow-aware messaging on extensible checkout surfaces.",
+    "concepts": [
+      "Checkout UI Extensions let you add safe, structured UI to supported checkout targets.",
+      "They are part of modern checkout extensibility and matter especially for Shopify Plus projects.",
+      "Use them for messaging, upsells, validation support, and operational checkout workflows.",
+      "Always consider performance, responsiveness, and merchant configurability."
+    ],
+    "codeLang": "tsx",
+    "code": "import { reactExtension, Banner } from '@shopify/ui-extensions-react/checkout';\n\nexport default reactExtension('purchase.checkout.block.render', () => (\n  <Banner status=\"info\">Free gift applied at checkout.</Banner>\n));",
+    "quiz": [
+      {
+        "question": "What do Checkout UI Extensions add?",
+        "options": [
+          "Arbitrary theme code on product pages",
+          "Structured custom UI on supported checkout targets",
+          "Only metafield definitions",
+          "Only GraphiQL docs"
+        ],
+        "answer": 1,
+        "explanation": "They extend supported checkout surfaces with safe UI components."
+      },
+      {
+        "question": "Why are they important?",
+        "options": [
+          "They replace all apps",
+          "They power modern checkout extensibility workflows",
+          "They are only for CSS",
+          "They disable performance"
+        ],
+        "answer": 1,
+        "explanation": "Checkout extensibility is now a major advanced Shopify capability."
+      }
+    ],
+    "resources": [
+      {
+        "label": "Checkout UI Extensions",
+        "url": "https://shopify.dev/docs/api/checkout-ui-extensions",
+        "tag": "Official"
+      },
+      {
+        "label": "Checkout extensibility",
+        "url": "https://shopify.dev/docs/apps/build/checkout",
+        "tag": "Official"
+      }
+    ],
+    "videos": [
+      {
+        "kind": "Concept Explanation",
+        "title": "Shopify Checkout UI Extensions",
+        "description": "Conceptual introduction to checkout extension surfaces.",
+        "embedUrl": "https://www.youtube.com/embed/K97-vqUEPSM",
+        "watchUrl": "https://www.youtube.com/watch?v=K97-vqUEPSM"
+      },
+      {
+        "kind": "Practical Implementation",
+        "title": "Building a Shopify Checkout UI Extension from Scratch",
+        "description": "Practical scratch build of a checkout UI extension.",
+        "embedUrl": "https://www.youtube.com/embed/R-8NLZK_lvA",
+        "watchUrl": "https://www.youtube.com/watch?v=R-8NLZK_lvA"
+      }
+    ]
+  }
+]

@@ -1,11 +1,20 @@
+const dataUrl = file => `${import.meta.env.BASE_URL}data/${file}`;
+
+async function loadJson(file) {
+  const response = await fetch(dataUrl(file));
+  if (!response.ok) {
+    throw new Error(`Failed to load ${file} (${response.status})`);
+  }
+  return response.json();
+}
 
 export async function loadAllData() {
   const [topics, chapters, resources, glossary, projects] = await Promise.all([
-    fetch('/data/topics.json').then(r => r.json()),
-    fetch('/data/chapters.json').then(r => r.json()),
-    fetch('/data/resources.json').then(r => r.json()),
-    fetch('/data/glossary.json').then(r => r.json()),
-    fetch('/data/projects.json').then(r => r.json())
+    loadJson('topics.json'),
+    loadJson('chapters.json'),
+    loadJson('resources.json'),
+    loadJson('glossary.json'),
+    loadJson('projects.json')
   ]);
 
   validateTopics(topics);

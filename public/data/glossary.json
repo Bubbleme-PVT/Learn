@@ -1,0 +1,82 @@
+[
+  {
+    "term": "Liquid",
+    "definition": "Shopify's server-side templating language for rendering storefront HTML."
+  },
+  {
+    "term": "Section",
+    "definition": "A merchant-editable theme module that can render configurable UI."
+  },
+  {
+    "term": "Block",
+    "definition": "A repeatable content unit nested inside a section."
+  },
+  {
+    "term": "Snippet",
+    "definition": "A reusable partial template, usually rendered with the render tag."
+  },
+  {
+    "term": "JSON template",
+    "definition": "A template that declares section order and configuration for a page type."
+  },
+  {
+    "term": "Metafield",
+    "definition": "Typed custom data attached to a Shopify resource."
+  },
+  {
+    "term": "Metaobject",
+    "definition": "A reusable structured content entry with typed fields."
+  },
+  {
+    "term": "App Bridge",
+    "definition": "A library for embedded app UX integration inside Shopify admin."
+  },
+  {
+    "term": "Theme app extension",
+    "definition": "An app-managed storefront extension surface such as an app block or embed."
+  },
+  {
+    "term": "Function",
+    "definition": "A backend extensibility unit for discounts, shipping, validation, and more."
+  },
+  {
+    "term": "Admin API",
+    "definition": "The app-facing API for store data and operations."
+  },
+  {
+    "term": "Storefront API",
+    "definition": "The storefront-facing GraphQL API used in headless builds and custom buying experiences."
+  },
+  {
+    "term": "Webhook",
+    "definition": "An event push from Shopify to your app when store data changes."
+  },
+  {
+    "term": "HMAC",
+    "definition": "A cryptographic signature used to verify webhook authenticity."
+  },
+  {
+    "term": "Ajax API",
+    "definition": "Theme-side endpoints for cart and section interactions without full reloads."
+  },
+  {
+    "term": "Hydrogen",
+    "definition": "Shopify's React framework for headless storefront development."
+  },
+  {
+    "term": "Oxygen",
+    "definition": "Shopify-managed hosting/deployment platform for Hydrogen storefronts."
+  },
+  {
+    "term": "Polaris",
+    "definition": "Shopify's admin-focused design system and component library."
+  },
+  {
+    "term": "GraphiQL",
+    "definition": "A GraphQL query explorer used to inspect schemas and test operations."
+  },
+  {
+    "term": "Theme Check",
+    "definition": "A linting tool for Shopify themes that catches common quality issues."
+  }
+]

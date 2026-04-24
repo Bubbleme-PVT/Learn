@@ -1,0 +1,205 @@
+{
+  "beginner": [
+    {
+      "title": "Shopify Partner Academy",
+      "desc": "Official guided learning paths and merchant/developer training.",
+      "url": "https://www.shopify.com/partners/academy",
+      "tags": [
+        "Official",
+        "Learning"
+      ]
+    },
+    {
+      "title": "Shopify Documentation",
+      "desc": "The main source of truth for themes, apps, APIs, and headless.",
+      "url": "https://shopify.dev/docs",
+      "tags": [
+        "Official",
+        "Docs"
+      ]
+    },
+    {
+      "title": "Dawn Theme",
+      "desc": "Reference theme for studying modern Shopify patterns.",
+      "url": "https://github.com/Shopify/dawn",
+      "tags": [
+        "Official",
+        "Theme"
+      ]
+    },
+    {
+      "title": "YouTube Learning Search",
+      "desc": "Broad search hub for Shopify development walkthroughs.",
+      "url": "https://www.youtube.com/results?search_query=shopify+development+tutorial",
+      "tags": [
+        "Video",
+        "Search"
+      ]
+    }
+  ],
+  "intermediate": [
+    {
+      "title": "Liquid Cheat Sheet",
+      "desc": "Fast-reference syntax and common Liquid patterns.",
+      "url": "https://www.shopify.com/ng/partners/shopify-cheat-sheet",
+      "tags": [
+        "Reference",
+        "Liquid"
+      ]
+    },
+    {
+      "title": "GraphQL Explorer",
+      "desc": "Explore schemas and test queries through Shopify tooling.",
+      "url": "https://shopify.dev/docs/api/usage/api-exploration",
+      "tags": [
+        "GraphQL",
+        "Tool"
+      ]
+    },
+    {
+      "title": "Theme Inspector",
+      "desc": "Profile and inspect storefront performance and sections.",
+      "url": "https://shopify.dev/docs/storefronts/themes/tools/theme-inspector",
+      "tags": [
+        "Performance",
+        "Tool"
+      ]
+    },
+    {
+      "title": "Ajax API Reference",
+      "desc": "Cart and section update endpoints for theme-side dynamic UX.",
+      "url": "https://shopify.dev/docs/api/ajax",
+      "tags": [
+        "Frontend",
+        "API"
+      ]
+    }
+  ],
+  "advanced": [
+    {
+      "title": "Hydrogen",
+      "desc": "Shopify's React framework for headless storefronts.",
+      "url": "https://shopify.dev/docs/storefronts/headless/hydrogen",
+      "tags": [
+        "Headless",
+        "Official"
+      ]
+    },
+    {
+      "title": "Shopify Functions",
+      "desc": "Extend backend commerce logic with modern extensibility.",
+      "url": "https://shopify.dev/docs/apps/build/functions",
+      "tags": [
+        "Functions",
+        "Official"
+      ]
+    },
+    {
+      "title": "Storefront API",
+      "desc": "GraphQL API for custom storefronts and headless builds.",
+      "url": "https://shopify.dev/docs/api/storefront",
+      "tags": [
+        "Headless",
+        "API"
+      ]
+    },
+    {
+      "title": "Remix",
+      "desc": "Framework used in many modern Shopify app and Hydrogen workflows.",
+      "url": "https://remix.run/docs",
+      "tags": [
+        "Framework",
+        "Advanced"
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "title": "Liquid Fundamentals",
+      "desc": "Good starting point for templating and data flow.",
+      "embedUrl": "https://www.youtube.com/embed/QTtXmARDG-Y",
+      "watchUrl": "https://www.youtube.com/watch?v=QTtXmARDG-Y",
+      "tags": [
+        "Liquid",
+        "Concept"
+      ]
+    },
+    {
+      "title": "Sections and Schema",
+      "desc": "Great pairing for section architecture and merchant settings.",
+      "embedUrl": "https://www.youtube.com/embed/atdMYeqCoqY",
+      "watchUrl": "https://www.youtube.com/watch?v=atdMYeqCoqY",
+      "tags": [
+        "Sections",
+        "Concept"
+      ]
+    },
+    {
+      "title": "Shopify APIs Overview",
+      "desc": "Broad API map before diving into REST, GraphQL, and webhooks.",
+      "embedUrl": "https://www.youtube.com/embed/uF0KGzbHlak",
+      "watchUrl": "https://www.youtube.com/watch?v=uF0KGzbHlak",
+      "tags": [
+        "API",
+        "Concept"
+      ]
+    },
+    {
+      "title": "Hydrogen + Oxygen Setup",
+      "desc": "Practical headless implementation example.",
+      "embedUrl": "https://www.youtube.com/embed/j4By5pFWZkM",
+      "watchUrl": "https://www.youtube.com/watch?v=j4By5pFWZkM",
+      "tags": [
+        "Hydrogen",
+        "Practical"
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "title": "Shopify CLI",
+      "desc": "Local development, preview, and deployment workflow.",
+      "url": "https://shopify.dev/docs/storefronts/themes/tools/cli",
+      "tags": [
+        "CLI",
+        "Official"
+      ]
+    },
+    {
+      "title": "VS Code Extension",
+      "desc": "Theme Check extension for linting and theme quality feedback.",
+      "url": "https://marketplace.visualstudio.com/items?itemName=Shopify.theme-check-vscode",
+      "tags": [
+        "Editor",
+        "Tool"
+      ]
+    },
+    {
+      "title": "Polaris",
+      "desc": "Shopify's admin-facing design system and component library.",
+      "url": "https://polaris.shopify.com/",
+      "tags": [
+        "UI",
+        "Official"
+      ]
+    },
+    {
+      "title": "GraphiQL",
+      "desc": "Explore and test GraphQL queries faster.",
+      "url": "https://shopify.dev/docs/api/usage/api-exploration",
+      "tags": [
+        "GraphQL",
+        "Tool"
+      ]
+    },
+    {
+      "title": "Partner Dashboard",
+      "desc": "Manage apps, stores, credentials, and partner operations.",
+      "url": "https://www.shopify.com/partners",
+      "tags": [
+        "Partner",
+        "Official"
+      ]
+    }
+  ]
+}
